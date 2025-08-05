@@ -657,9 +657,9 @@
                         <div style="font-size: 1.4em; font-weight: bold; margin-top: 10px;">21 Days of Prayer for Schools movement!</div>
                     </div>
                     
-                    <p style="margin: 15px 0;">You've committed to pray for the schools you selected.</p>
+                    <p style="margin: 15px 0;">You've committed to pray for:</p>
                     
-                    <div id="selectedSchoolsList" style="margin: 15px 0; font-weight: bold;"></div>
+                    <div id="selectedSchoolsList" style="margin: 20px 0; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;"></div>
                     
                     <div style="font-size: 1.5em; font-weight: bold; margin: 20px 0; color: #ec9e23;">August 1-21, 2025</div>
 
@@ -695,10 +695,16 @@
                         </div>
                     </div>
 
-                    <div class="action-buttons">
-                        <a href="map.html" class="action-btn">View Prayer Map</a>
-                        <a href="#" class="action-btn" onclick="location.reload(); return false;">Adopt More Schools</a>
+                    <div class="action-buttons" style="flex-direction: column; gap: 10px;">
+                        <a href="#" class="action-btn" onclick="location.reload(); return false;" style="width: 100%; max-width: 300px; margin: 0 auto;">Adopt More Schools</a>
+                        <a href="map.html" class="action-btn" style="width: 100%; max-width: 300px; margin: 0 auto; background: #ec9e23;">View Prayer Map</a>
                     </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="map.html" style="display: inline-block; background: #ec9e23; color: white; padding: 12px 30px; border-radius: 4px; text-decoration: none; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;">
+                        View Prayer Map
+                    </a>
                 </div>
             </div>
         </div>
@@ -1337,9 +1343,24 @@
                     // Personalize the thank you message with proper formatting
                     document.getElementById('userFirstName').textContent = firstName;
                     
-                    // Display the selected schools
-                    const schoolsList = selectedSchools.map(school => school.name).join(', ');
-                    document.getElementById('selectedSchoolsList').textContent = schoolsList;
+                    // Display the selected schools with proper formatting
+                    const schoolsListHTML = selectedSchools.map(school => {
+                        // Extract city and state from address
+                        const addressParts = school.address.split(',');
+                        let location = '';
+                        if (addressParts.length >= 2) {
+                            // Get last two parts (usually city, state zip)
+                            const city = addressParts[addressParts.length - 2].trim();
+                            const stateZip = addressParts[addressParts.length - 1].trim();
+                            const state = stateZip.split(' ')[0]; // Get state abbreviation
+                            location = `${city}, ${state}`;
+                        } else {
+                            location = school.address;
+                        }
+                        return `<div style="margin: 8px 0;"><strong>${school.name} (${location})</strong></div>`;
+                    }).join('');
+                    
+                    document.getElementById('selectedSchoolsList').innerHTML = schoolsListHTML;
                     
                     // Show success message
                     document.getElementById('adoptSchoolForm').style.display = 'none';
