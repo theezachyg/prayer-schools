@@ -1518,11 +1518,74 @@
             }, 500);
         }
 
-        // Load notifications and pre-fill form when page loads
-        window.addEventListener('load', () => {
-            loadPrayerNotifications();
-            prefillFormFromURL();
-        });
+// Pre-fill form from URL parameters
+function prefillFormFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const firstName = urlParams.get('firstName');
+    const lastName = urlParams.get('lastName');
+    const email = urlParams.get('email');
+    
+    let fieldsFilled = false;
+    
+    if (firstName) {
+        const firstNameField = document.getElementById('firstName');
+        if (firstNameField) {
+            firstNameField.value = decodeURIComponent(firstName);
+            fieldsFilled = true;
+        }
+    }
+    
+    if (lastName) {
+        const lastNameField = document.getElementById('lastName');
+        if (lastNameField) {
+            lastNameField.value = decodeURIComponent(lastName);
+            fieldsFilled = true;
+        }
+    }
+    
+    if (email) {
+        const emailField = document.getElementById('email');
+        if (emailField) {
+            emailField.value = decodeURIComponent(email);
+            fieldsFilled = true;
+        }
+    }
+    
+    // If fields were filled, show a welcome message and focus on school search
+    if (fieldsFilled && firstName) {
+        // Add welcome message
+        const infoText = document.querySelector('.info-text');
+        if (infoText) {
+            infoText.innerHTML = `
+                <strong>Welcome back, ${decodeURIComponent(firstName)}!</strong><br>
+                Add more schools to your prayer list below.
+            `;
+            infoText.style.background = '#e6f3ff';
+            infoText.style.borderLeftColor = '#36b7ff';
+        }
+        
+        // Focus on school search after a delay
+        setTimeout(() => {
+            const schoolInput = document.getElementById('school-input');
+            if (schoolInput) {
+                schoolInput.focus();
+            }
+        }, 1000);
+    }
+}
+
+// Load notifications and pre-fill form when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Pre-fill form immediately when DOM is ready
+    prefillFormFromURL();
+});
+
+// Load other features when window fully loads
+window.addEventListener('load', () => {
+    loadPrayerNotifications();
+    // Try pre-filling again in case it didn't work the first time
+    prefillFormFromURL();
+});
     </script>
 </body>
 </html>
