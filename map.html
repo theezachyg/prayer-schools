@@ -419,12 +419,111 @@
             cursor: pointer;
         }
 
+        /* Email search section */
+        .email-search-section {
+            background: rgba(54, 183, 255, 0.1);
+            border: 1px solid #36b7ff;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .email-search-section h3 {
+            color: #36b7ff;
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .email-search-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .email-search-form input {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #36b7ff;
+            border-radius: 4px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .email-search-form input:focus {
+            outline: none;
+            border-color: #ec9e23;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .email-search-form button {
+            padding: 8px 20px;
+            background: #36b7ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .email-search-form button:hover {
+            background: #ec9e23;
+        }
+
+        .email-search-result {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(236, 158, 35, 0.1);
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .email-search-result.success {
+            border: 1px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .email-search-result.error {
+            border: 1px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
         /* No results message */
         .no-results {
             text-align: center;
             color: #d2f8ff;
             padding: 40px;
             font-size: 1.1em;
+        }
+
+        .no-results-help {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(54, 183, 255, 0.1);
+            border-radius: 4px;
+            border: 1px solid #36b7ff;
+        }
+
+        .no-results-help p {
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        .no-results-help a {
+            color: #ec9e23;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .no-results-help a:hover {
+            text-decoration: underline;
         }
 
         .state-group {
@@ -794,6 +893,15 @@
             
             .my-schools-toggle {
                 justify-content: center;
+            }
+
+            .email-search-form {
+                flex-direction: column;
+            }
+
+            .email-search-form input,
+            .email-search-form button {
+                width: 100%;
             }
         }
         @media (max-width: 768px) {
@@ -1206,6 +1314,17 @@
             }
         }
 
+        // Search for schools by email
+        function searchSchoolsByEmail(email) {
+            const results = [];
+            schoolData.forEach((school, key) => {
+                if (school.emails && school.emails.includes(email.toLowerCase())) {
+                    results.push({ key, school });
+                }
+            });
+            return results;
+        }
+
         // Check if current user email matches any in the data
         function checkUserSchools() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -1392,7 +1511,7 @@
             dataRows.forEach(row => {
                 const firstName = row[1]; // First name column
                 const lastName = row[2]; // Last name column
-                const email = row[3]; // Email column
+                const email = row[3]?.toLowerCase() || ''; // Email column (lowercase for comparison)
                 const schoolName = row[4]; // School Name column
                 const schoolAddress = row[5]; // School Address column
                 const personName = `${firstName} ${lastName}`; // First + Last name
@@ -1633,384 +1752,3 @@
                 closeShareModal();
             }, 3000);
         }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const schoolsModal = document.getElementById('schoolsModal');
-            const shareModal = document.getElementById('shareModal');
-            
-            if (event.target == schoolsModal) {
-                schoolsModal.style.display = 'none';
-            } else if (event.target == shareModal) {
-                shareModal.style.display = 'none';
-            }
-        }
-
-        // Populate modal with schools data
-        function populateSchoolsModal() {
-            const modalBody = document.getElementById('modalSchoolsList');
-            modalBody.innerHTML = '';
-
-            // Add search and filter controls
-            const controlsDiv = document.createElement('div');
-            controlsDiv.className = 'modal-controls';
-            controlsDiv.innerHTML = `
-                <div class="search-wrapper">
-                    <div class="modal-search">
-                        <input type="text" id="schoolSearchInput" placeholder="Search schools, cities, or states...">
-                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                        </svg>
-                    </div>
-                </div>
-                <label class="my-schools-toggle" id="mySchoolsToggle">
-                    <input type="checkbox" id="mySchoolsCheckbox">
-                    <span>My Schools (${mySchoolIds.size})</span>
-                </label>
-            `;
-            modalBody.appendChild(controlsDiv);
-
-            // Add content container
-            const contentDiv = document.createElement('div');
-            contentDiv.id = 'schoolsModalContent';
-            modalBody.appendChild(contentDiv);
-
-            // Display schools
-            displayFilteredSchools();
-
-            // Add event listeners
-            document.getElementById('schoolSearchInput').addEventListener('input', displayFilteredSchools);
-            document.getElementById('mySchoolsCheckbox').addEventListener('change', function() {
-                document.getElementById('mySchoolsToggle').classList.toggle('active', this.checked);
-                displayFilteredSchools();
-            });
-        }
-
-        function displayFilteredSchools() {
-            const contentDiv = document.getElementById('schoolsModalContent');
-            const searchTerm = document.getElementById('schoolSearchInput')?.value.toLowerCase() || '';
-            const showMySchools = document.getElementById('mySchoolsCheckbox')?.checked || false;
-
-            contentDiv.innerHTML = '';
-
-            // Group schools by state
-            const schoolsByState = new Map();
-            let visibleCount = 0;
-            
-            schoolData.forEach((school, key) => {
-                // Filter by "My Schools" if checked
-                if (showMySchools && !mySchoolIds.has(key)) {
-                    return;
-                }
-
-                // Extract state and city from address
-                const addressParts = school.address.split(',');
-                let state = 'Unknown';
-                let city = '';
-                
-                // Try to extract state (usually in format "City, ST 12345")
-                const stateMatch = school.address.match(/,\s*([A-Z]{2})\s*\d{5}/);
-                if (stateMatch) {
-                    state = stateMatch[1];
-                }
-                
-                // Extract city (usually first part before comma)
-                if (addressParts.length > 0) {
-                    city = addressParts[0].trim();
-                }
-
-                // Search filter
-                if (searchTerm) {
-                    const searchableText = `${school.name} ${city} ${state} ${getStateName(state)}`.toLowerCase();
-                    if (!searchableText.includes(searchTerm)) {
-                        return;
-                    }
-                }
-
-                visibleCount++;
-                
-                if (!schoolsByState.has(state)) {
-                    schoolsByState.set(state, []);
-                }
-                
-                schoolsByState.get(state).push({
-                    key: key,
-                    name: school.name,
-                    city: city,
-                    state: state,
-                    fullAddress: school.address,
-                    peopleCount: school.people.length,
-                    isMySchool: mySchoolIds.has(key)
-                });
-            });
-
-            // Sort states alphabetically
-            const sortedStates = Array.from(schoolsByState.keys()).sort();
-
-            if (sortedStates.length === 0) {
-                contentDiv.innerHTML = `
-                    <div class="no-results">
-                        ${showMySchools ? 'You haven\'t selected any schools as "My Schools" yet.' : 'No schools found matching your search.'}
-                    </div>
-                `;
-                return;
-            }
-
-            // Create HTML for each state
-            sortedStates.forEach(state => {
-                const stateDiv = document.createElement('div');
-                stateDiv.className = 'state-group';
-
-                // State header
-                const stateHeader = document.createElement('div');
-                stateHeader.className = 'state-name';
-                stateHeader.innerHTML = `
-                    <span>${getStateName(state)}</span>
-                    <span class="school-count">${schoolsByState.get(state).length} ${schoolsByState.get(state).length === 1 ? 'school' : 'schools'}</span>
-                `;
-                stateDiv.appendChild(stateHeader);
-
-                // Schools grid
-                const schoolsGrid = document.createElement('div');
-                schoolsGrid.className = 'school-grid';
-
-                // Sort schools within state alphabetically
-                const schools = schoolsByState.get(state).sort((a, b) => 
-                    a.name.localeCompare(b.name)
-                );
-
-                // Add each school
-                schools.forEach(school => {
-                    const schoolCard = document.createElement('div');
-                    schoolCard.className = 'school-card';
-                    schoolCard.style.cursor = 'pointer';
-                    if (school.isMySchool) {
-                        schoolCard.style.borderColor = '#ec9e23';
-                        schoolCard.style.background = 'rgba(236, 158, 35, 0.1)';
-                    }
-                    schoolCard.innerHTML = `
-                        <div class="school-card-name">${school.name} ${school.isMySchool ? '⭐' : ''}</div>
-                        <div class="school-card-location">${school.city}, ${school.state}</div>
-                    `;
-                    
-                    // Add click handler to toggle "My School"
-                    schoolCard.addEventListener('click', function() {
-                        if (mySchoolIds.has(school.key)) {
-                            mySchoolIds.delete(school.key);
-                            this.style.borderColor = '#36b7ff';
-                            this.style.background = 'rgba(54, 183, 255, 0.1)';
-                        } else {
-                            mySchoolIds.add(school.key);
-                            this.style.borderColor = '#ec9e23';
-                            this.style.background = 'rgba(236, 158, 35, 0.1)';
-                        }
-                        saveMySchools();
-                        // Update count
-                        document.querySelector('.my-schools-toggle span').textContent = `My Schools (${mySchoolIds.size})`;
-                    });
-                    
-                    schoolsGrid.appendChild(schoolCard);
-                });
-
-                stateDiv.appendChild(schoolsGrid);
-                contentDiv.appendChild(stateDiv);
-            });
-        }
-
-        // Get full state name from abbreviation
-        function getStateName(abbr) {
-            const states = {
-                'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas',
-                'CA': 'California', 'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware',
-                'FL': 'Florida', 'GA': 'Georgia', 'HI': 'Hawaii', 'ID': 'Idaho',
-                'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa', 'KS': 'Kansas',
-                'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
-                'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi',
-                'MO': 'Missouri', 'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada',
-                'NH': 'New Hampshire', 'NJ': 'New Jersey', 'NM': 'New Mexico', 'NY': 'New York',
-                'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio', 'OK': 'Oklahoma',
-                'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
-                'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah',
-                'VT': 'Vermont', 'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia',
-                'WI': 'Wisconsin', 'WY': 'Wyoming'
-            };
-            return states[abbr] || abbr;
-        }
-
-        // Add markers to map
-        function addMarkersToMap() {
-            console.log('Adding markers to map...');
-            
-            // Clear existing markers first
-            markers.forEach(marker => marker.setMap(null));
-            markers = [];
-            
-            let successful = 0;
-            let failed = 0;
-
-            if (schoolData.size === 0) {
-                document.getElementById('loading').style.display = 'none';
-                return;
-            }
-
-            schoolData.forEach((school, key) => {
-                // Check if we have valid coordinates
-                if (school.lat && school.lng && !isNaN(school.lat) && !isNaN(school.lng)) {
-                    const marker = new google.maps.Marker({
-                        map: map,
-                        position: { lat: school.lat, lng: school.lng },
-                        title: school.name,
-                        icon: {
-                            path: google.maps.SymbolPath.CIRCLE,
-                            scale: 8,
-                            fillColor: '#ec9e23',
-                            fillOpacity: 0.9,
-                            strokeColor: '#36b7ff',
-                            strokeWeight: 2
-                        }
-                    });
-
-                    // Create info window
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `
-                            <div class="info-window">
-                                <h4>${school.name}</h4>
-                                <p>${school.address}</p>
-                                <p class="prayer-count">${school.people.length} ${school.people.length === 1 ? 'person' : 'people'} praying</p>
-                            </div>
-                        `
-                    });
-
-                    marker.addListener('click', () => {
-                        infoWindow.open(map, marker);
-                    });
-
-                    markers.push(marker);
-                    successful++;
-                } else {
-                    console.warn(`Missing coordinates for ${school.name} at ${school.address}`);
-                    failed++;
-                }
-            });
-            
-            console.log(`Added ${successful} markers successfully`);
-            if (failed > 0) {
-                console.warn(`${failed} schools are missing coordinates and won't appear on the map`);
-            }
-            
-            // Hide loading screen
-            document.getElementById('loading').style.display = 'none';
-        }
-
-        // Load Google Maps - no visualization library needed anymore
-        function loadGoogleMaps() {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
-            script.async = true;
-            script.defer = true;
-            document.head.appendChild(script);
-        }
-
-        // Initialize on page load
-        window.addEventListener('load', function() {
-            loadMySchools(); // Load saved schools first
-            loadGoogleMaps();
-            
-            // Track page view
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'page_view', {
-                    'page_title': 'Prayer Map',
-                    'page_location': window.location.href
-                });
-            }
-        });
-        
-        // Auto-refresh data every 2 minutes
-        setInterval(() => {
-            if (map) {
-                console.log('Auto-refreshing map data...');
-                loadSchoolData();
-            }
-        }, 120000); // 120000ms = 2 minutes
-
-        // Prayer notification system
-        let prayerNotifications = [];
-        let notificationIndex = 0;
-        let notificationInterval;
-
-        function initializePrayerNotifications() {
-            // Clear previous notifications
-            prayerNotifications = [];
-            
-            // Convert schoolData to notification format
-            schoolData.forEach((school) => {
-                school.people.forEach((person) => {
-                    // Extract first name from full name
-                    const firstName = person.split(' ')[0];
-                    prayerNotifications.push({
-                        name: firstName,
-                        school: school.name
-                    });
-                });
-            });
-
-            // Shuffle the notifications for variety
-            prayerNotifications = prayerNotifications.sort(() => Math.random() - 0.5);
-
-            // Start showing notifications if we have any
-            if (prayerNotifications.length > 0) {
-                // Wait 5 seconds after page load before showing first notification
-                setTimeout(() => {
-                    showNextNotification();
-                    // Show a new notification every 15-20 seconds (randomized)
-                    startNotificationCycle();
-                }, 5000);
-            }
-        }
-
-        function startNotificationCycle() {
-            // Clear any existing interval
-            if (notificationInterval) {
-                clearInterval(notificationInterval);
-            }
-
-            notificationInterval = setInterval(() => {
-                showNextNotification();
-            }, 15000 + Math.random() * 5000); // 15-20 seconds randomly
-        }
-
-        function showNextNotification() {
-            const notification = document.getElementById('prayerNotification');
-            const textElement = document.getElementById('prayerNotificationText');
-
-            if (!notification || !textElement || prayerNotifications.length === 0) {
-                return;
-            }
-
-            // Hide current notification with animation
-            notification.classList.add('hiding');
-
-            setTimeout(() => {
-                // Update content
-                const current = prayerNotifications[notificationIndex];
-                textElement.innerHTML = `<strong>${current.name}</strong> is praying for ${current.school}`;
-
-                // Reset animation and show
-                notification.classList.remove('hiding');
-                notification.style.display = 'block';
-
-                // Move to next notification
-                notificationIndex = (notificationIndex + 1) % prayerNotifications.length;
-
-                // Hide after 5 seconds
-                setTimeout(() => {
-                    notification.classList.add('hiding');
-                    setTimeout(() => {
-                        notification.style.display = 'none';
-                    }, 500);
-                }, 5000);
-            }, 500);
-        }
-    </script>
-</body>
-</html>
