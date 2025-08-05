@@ -566,6 +566,11 @@
             color: white;
         }
 
+        .school-card.my-school {
+            background: rgba(236, 158, 35, 0.1);
+            border-color: #ec9e23;
+        }
+
         .school-card-name {
             font-weight: bold;
             color: #ec9e23;
@@ -1266,6 +1271,28 @@
     <script>
         // Set current year
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Define modal functions in global scope FIRST before any other code
+        function openSchoolsModal() {
+            const modal = document.getElementById('schoolsModal');
+            modal.style.display = 'block';
+            populateSchoolsModal();
+        }
+
+        function closeSchoolsModal() {
+            const modal = document.getElementById('schoolsModal');
+            modal.style.display = 'none';
+        }
+
+        function openShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.style.display = 'block';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.style.display = 'none';
+        }
     </script>
     
     <!-- Load configuration -->
@@ -1291,27 +1318,110 @@
         let markers = [];
         let schoolData = new Map();
         let mySchoolIds = new Set();
-
-        // Define modal functions in global scope immediately
-        function openSchoolsModal() {
-            const modal = document.getElementById('schoolsModal');
-            modal.style.display = 'block';
-            populateSchoolsModal();
+        
+        // populateSchoolsModal function (missing in original)
+        function populateSchoolsModal() {
+            const modalBody = document.getElementById('modalSchoolsList');
+            
+            if (schoolData.size === 0) {
+                modalBody.innerHTML = '<p class="no-results">No schools have been adopted yet.</p>';
+                return;
+            }
+            
+            // Group schools by state
+            const schoolsByState = new Map();
+            schoolData.forEach((school, key) => {
+                const stateMatch = school.address.match(/,\s*([A-Z]{2})\s*\d{5}/);
+                const state = stateMatch ? stateMatch[1] : 'Unknown';
+                
+                if (!schoolsByState.has(state)) {
+                    schoolsByState.set(state, []);
+                }
+                schoolsByState.get(state).push({ key, ...school });
+            });
+            
+            // Sort states alphabetically
+            const sortedStates = Array.from(schoolsByState.keys()).sort();
+            
+            let html = '<div class="modal-controls">';
+            html += '<div class="modal-search search-wrapper">';
+            html += '<input type="text" placeholder="Search schools..." onkeyup="filterSchoolsList(this.value)">';
+            html += '<span class="search-icon">🔍</span>';
+            html += '</div>';
+            html += '<label class="my-schools-toggle">';
+            html += '<input type="checkbox" onchange="toggleMySchools(this.checked)">';
+            html += '<span>Show My Schools Only</span>';
+            html += '</label>';
+            html += '</div>';
+            
+            html += '<div id="schoolsListContent">';
+            sortedStates.forEach(state => {
+                const schools = schoolsByState.get(state);
+                html += `<div class="state-group" data-state="${state}">`;
+                html += `<div class="state-name">${state} <span class="school-count">${schools.length}</span></div>`;
+                html += '<div class="school-grid">';
+                
+                schools.forEach(school => {
+                    const isMySchool = mySchoolIds.has(school.key);
+                    html += `<div class="school-card ${isMySchool ? 'my-school' : ''}" data-school-name="${school.name.toLowerCase()}" data-my-school="${isMySchool}">`;
+                    html += `<div class="school-card-name">${school.name}</div>`;
+                    html += `<div class="school-card-location">${school.address}</div>`;
+                    html += `<div style="color: #36b7ff; font-size: 0.85em; margin-top: 5px;">`;
+                    html += `${school.people.length} ${school.people.length === 1 ? 'person' : 'people'} praying`;
+                    html += '</div>';
+                    html += '</div>';
+                });
+                
+                html += '</div></div>';
+            });
+            html += '</div>';
+            
+            modalBody.innerHTML = html;
         }
-
-        function closeSchoolsModal() {
-            const modal = document.getElementById('schoolsModal');
-            modal.style.display = 'none';
+        
+        // Filter schools list function
+        function filterSchoolsList(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            const schoolCards = document.querySelectorAll('.school-card');
+            const stateGroups = document.querySelectorAll('.state-group');
+            
+            stateGroups.forEach(group => {
+                let hasVisibleSchools = false;
+                const groupSchools = group.querySelectorAll('.school-card');
+                
+                groupSchools.forEach(card => {
+                    const schoolName = card.getAttribute('data-school-name');
+                    const isVisible = schoolName.includes(term);
+                    card.style.display = isVisible ? 'block' : 'none';
+                    if (isVisible) hasVisibleSchools = true;
+                });
+                
+                group.style.display = hasVisibleSchools ? 'block' : 'none';
+            });
         }
-
-        function openShareModal() {
-            const modal = document.getElementById('shareModal');
-            modal.style.display = 'block';
-        }
-
-        function closeShareModal() {
-            const modal = document.getElementById('shareModal');
-            modal.style.display = 'none';
+        
+        // Toggle my schools only
+        function toggleMySchools(showOnlyMine) {
+            const schoolCards = document.querySelectorAll('.school-card');
+            const stateGroups = document.querySelectorAll('.state-group');
+            
+            if (showOnlyMine) {
+                stateGroups.forEach(group => {
+                    let hasMySchools = false;
+                    const groupSchools = group.querySelectorAll('.school-card');
+                    
+                    groupSchools.forEach(card => {
+                        const isMySchool = card.getAttribute('data-my-school') === 'true';
+                        card.style.display = isMySchool ? 'block' : 'none';
+                        if (isMySchool) hasMySchools = true;
+                    });
+                    
+                    group.style.display = hasMySchools ? 'block' : 'none';
+                });
+            } else {
+                schoolCards.forEach(card => card.style.display = 'block');
+                stateGroups.forEach(group => group.style.display = 'block');
+            }
         }
 
         // Load saved schools from localStorage
@@ -1504,7 +1614,12 @@
             
             // Load data from Google Sheets
             loadSchoolData();
+        } catch (error) {
+            console.error('Error initializing map:', error);
+            document.getElementById('loading').innerHTML = 
+                '<p style="color: #e53e3e;">Error loading map. Please refresh the page.</p>';
         }
+    }
 
         // Load data from Google Sheets
         async function loadSchoolData() {
@@ -1617,19 +1732,133 @@
             document.getElementById('totalStates').textContent = states.size;
         }
 
-        // Check if current user email matches any in the data
-        function checkUserSchools() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const userEmail = urlParams.get('email');
-            if (userEmail) {
-                // Store email-based school IDs
-                schoolData.forEach((school, key) => {
-                    if (school.emails && school.emails.includes(userEmail)) {
-                        mySchoolIds.add(key);
+        // Add markers to map
+        function addMarkersToMap() {
+            console.log('Adding markers to map...');
+            
+            // Clear existing markers
+            markers.forEach(marker => marker.setMap(null));
+            markers = [];
+            
+            // Add a marker for each school
+            schoolData.forEach((school, key) => {
+                // Skip if no coordinates
+                if (!school.lat || !school.lng || isNaN(school.lat) || isNaN(school.lng)) {
+                    console.warn(`Skipping school without valid coordinates: ${school.name}`);
+                    return;
+                }
+                
+                const marker = new google.maps.Marker({
+                    position: { lat: school.lat, lng: school.lng },
+                    map: map,
+                    title: school.name,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 8,
+                        fillColor: '#36b7ff',
+                        fillOpacity: 0.8,
+                        strokeColor: '#ffffff',
+                        strokeWeight: 2
                     }
                 });
-                saveMySchools();
+                
+                // Create info window content
+                const infoContent = `
+                    <div class="info-window">
+                        <h4>${school.name}</h4>
+                        <p>${school.address}</p>
+                        <p class="prayer-count">${school.people.length} ${school.people.length === 1 ? 'person' : 'people'} praying</p>
+                    </div>
+                `;
+                
+                const infoWindow = new google.maps.InfoWindow({
+                    content: infoContent
+                });
+                
+                marker.addListener('click', () => {
+                    // Close any open info windows
+                    markers.forEach(m => {
+                        if (m.infoWindow) m.infoWindow.close();
+                    });
+                    infoWindow.open(map, marker);
+                });
+                
+                // Store info window reference
+                marker.infoWindow = infoWindow;
+                markers.push(marker);
+            });
+            
+            // Hide loading
+            document.getElementById('loading').style.display = 'none';
+            
+            console.log(`Added ${markers.length} markers to map`);
+        }
+        
+        // Initialize prayer notifications
+        function initializePrayerNotifications() {
+            if (schoolData.size === 0) return;
+            
+            const notifications = [];
+            schoolData.forEach(school => {
+                school.people.forEach(person => {
+                    const firstName = person.split(' ')[0];
+                    notifications.push({
+                        name: firstName,
+                        school: school.name
+                    });
+                });
+            });
+            
+            // Shuffle notifications
+            const shuffled = notifications.sort(() => Math.random() - 0.5);
+            
+            if (shuffled.length > 0) {
+                startNotificationCycle(shuffled);
             }
+        }
+        
+        let notificationIndex = 0;
+        let notificationInterval;
+        
+        function startNotificationCycle(notifications) {
+            // Wait 5 seconds after page load
+            setTimeout(() => {
+                showNotification(notifications);
+                
+                // Show a new notification every 15-20 seconds
+                notificationInterval = setInterval(() => {
+                    showNotification(notifications);
+                }, 15000 + Math.random() * 5000);
+            }, 5000);
+        }
+        
+        function showNotification(notifications) {
+            const notification = document.getElementById('prayerNotification');
+            const textElement = document.getElementById('prayerNotificationText');
+            
+            // Hide current notification
+            notification.classList.add('hiding');
+            
+            setTimeout(() => {
+                // Update content
+                const current = notifications[notificationIndex];
+                textElement.innerHTML = `<strong>${current.name}</strong> is praying for ${current.school}`;
+                
+                // Show notification
+                notification.classList.remove('hiding');
+                notification.style.display = 'block';
+                
+                // Move to next
+                notificationIndex = (notificationIndex + 1) % notifications.length;
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    notification.classList.add('hiding');
+                    setTimeout(() => {
+                        notification.style.display = 'none';
+                    }, 500);
+                }, 5000);
+            }, 500);
         }
 
         // Share functions with analytics and logging
@@ -1784,3 +2013,40 @@
                 closeShareModal();
             }, 3000);
         }
+        
+        // Load Google Maps API
+        function loadGoogleMapsAPI() {
+            if (!GOOGLE_MAPS_API_KEY) {
+                console.error('Google Maps API key not configured');
+                document.getElementById('loading').innerHTML = 
+                    '<p style="color: #e53e3e;">Configuration error. Please contact support.</p>';
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+            script.async = true;
+            script.defer = true;
+            script.onerror = function() {
+                console.error('Failed to load Google Maps');
+                document.getElementById('loading').innerHTML = 
+                    '<p style="color: #e53e3e;">Failed to load Google Maps. Please refresh the page.</p>';
+            };
+            document.head.appendChild(script);
+        }
+        
+        // Initialize everything when page loads
+        window.addEventListener('load', () => {
+            loadMySchools();
+            loadGoogleMapsAPI();
+        });
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
