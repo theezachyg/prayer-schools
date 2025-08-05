@@ -1319,6 +1319,21 @@
         let schoolData = new Map();
         let mySchoolIds = new Set();
         
+        // State abbreviation to full name mapping
+        const stateNames = {
+            'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+            'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'FL': 'Florida', 'GA': 'Georgia',
+            'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa',
+            'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+            'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri',
+            'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey',
+            'NM': 'New Mexico', 'NY': 'New York', 'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio',
+            'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+            'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+            'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming',
+            'DC': 'District of Columbia'
+        };
+
         // populateSchoolsModal function (missing in original)
         function populateSchoolsModal() {
             const modalBody = document.getElementById('modalSchoolsList');
@@ -1332,12 +1347,13 @@
             const schoolsByState = new Map();
             schoolData.forEach((school, key) => {
                 const stateMatch = school.address.match(/,\s*([A-Z]{2})\s*\d{5}/);
-                const state = stateMatch ? stateMatch[1] : 'Unknown';
+                const stateAbbr = stateMatch ? stateMatch[1] : 'Unknown';
+                const stateName = stateNames[stateAbbr] || stateAbbr;
                 
-                if (!schoolsByState.has(state)) {
-                    schoolsByState.set(state, []);
+                if (!schoolsByState.has(stateName)) {
+                    schoolsByState.set(stateName, []);
                 }
-                schoolsByState.get(state).push({ key, ...school });
+                schoolsByState.get(stateName).push({ key, ...school });
             });
             
             // Sort states alphabetically
@@ -1349,9 +1365,19 @@
             html += '<span class="search-icon">🔍</span>';
             html += '</div>';
             html += '<label class="my-schools-toggle">';
-            html += '<input type="checkbox" onchange="toggleMySchools(this.checked)">';
+            html += '<input type="checkbox" id="mySchoolsCheckbox" onchange="toggleMySchools(this.checked)">';
             html += '<span>Show My Schools Only</span>';
             html += '</label>';
+            html += '</div>';
+            
+            // Add email search section
+            html += '<div class="email-search-section" style="margin-bottom: 20px;">';
+            html += '<h3>Find My Schools</h3>';
+            html += '<div class="email-search-form">';
+            html += '<input type="email" id="emailSearchInput" placeholder="Enter your email address">';
+            html += '<button onclick="searchMySchoolsByEmail()">Find Schools</button>';
+            html += '</div>';
+            html += '<div id="emailSearchResult"></div>';
             html += '</div>';
             
             html += '<div id="schoolsListContent">';
@@ -1421,6 +1447,48 @@
             } else {
                 schoolCards.forEach(card => card.style.display = 'block');
                 stateGroups.forEach(group => group.style.display = 'block');
+            }
+        }
+        
+        // Search for user's schools by email
+        function searchMySchoolsByEmail() {
+            const emailInput = document.getElementById('emailSearchInput');
+            const email = emailInput.value.trim().toLowerCase();
+            const resultDiv = document.getElementById('emailSearchResult');
+            
+            if (!email) {
+                resultDiv.innerHTML = '<p class="email-search-result error">Please enter your email address</p>';
+                return;
+            }
+            
+            // Search for schools with this email
+            const foundSchools = searchSchoolsByEmail(email);
+            
+            if (foundSchools.length > 0) {
+                // Clear previous selections
+                mySchoolIds.clear();
+                
+                // Add found schools to mySchoolIds
+                foundSchools.forEach(({ key }) => {
+                    mySchoolIds.add(key);
+                });
+                
+                // Save to localStorage
+                saveMySchools();
+                
+                // Update the display
+                populateSchoolsModal();
+                
+                // Check the "Show My Schools Only" checkbox
+                const checkbox = document.getElementById('mySchoolsCheckbox');
+                if (checkbox) {
+                    checkbox.checked = true;
+                    toggleMySchools(true);
+                }
+                
+                resultDiv.innerHTML = `<p class="email-search-result success">Found ${foundSchools.length} school${foundSchools.length > 1 ? 's' : ''} you're praying for!</p>`;
+            } else {
+                resultDiv.innerHTML = '<p class="email-search-result error">No schools found for this email address</p>';
             }
         }
 
@@ -1718,12 +1786,14 @@
                     .flatMap(school => school.people)
             ).size;
             
-            // Count states (rough estimate from addresses)
+            // Count states
             const states = new Set();
             schoolData.forEach(school => {
                 const stateMatch = school.address.match(/,\s*([A-Z]{2})\s*\d{5}/);
                 if (stateMatch) {
-                    states.add(stateMatch[1]);
+                    const stateAbbr = stateMatch[1];
+                    const stateName = stateNames[stateAbbr] || stateAbbr;
+                    states.add(stateName);
                 }
             });
 
@@ -2047,6 +2117,14 @@
                 event.target.style.display = 'none';
             }
         }
+        
+        // Handle Enter key in email search
+        document.addEventListener('keypress', function(e) {
+            if (e.target.id === 'emailSearchInput' && e.key === 'Enter') {
+                e.preventDefault();
+                searchMySchoolsByEmail();
+            }
+        });
     </script>
 </body>
 </html>
