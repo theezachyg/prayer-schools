@@ -1292,6 +1292,28 @@
         let schoolData = new Map();
         let mySchoolIds = new Set();
 
+        // Define modal functions in global scope immediately
+        function openSchoolsModal() {
+            const modal = document.getElementById('schoolsModal');
+            modal.style.display = 'block';
+            populateSchoolsModal();
+        }
+
+        function closeSchoolsModal() {
+            const modal = document.getElementById('schoolsModal');
+            modal.style.display = 'none';
+        }
+
+        function openShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.style.display = 'block';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.style.display = 'none';
+        }
+
         // Load saved schools from localStorage
         function loadMySchools() {
             try {
@@ -1342,13 +1364,16 @@
 
         // Initialize map
         function initMap() {
+            console.log('Initializing Google Map...');
+            
             // Detect mobile device
             const isMobile = window.innerWidth <= 768;
             
-            map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 39.8283, lng: -98.5795 }, // Center of USA
-                zoom: isMobile ? 3 : 4, // Wider view on mobile
-                styles: [
+            try {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 39.8283, lng: -98.5795 }, // Center of USA
+                    zoom: isMobile ? 3 : 4, // Wider view on mobile
+                    styles: [
                     // Hide all points of interest
                     {
                         "featureType": "poi",
@@ -1592,28 +1617,19 @@
             document.getElementById('totalStates').textContent = states.size;
         }
 
-        // Open schools modal
-        function openSchoolsModal() {
-            const modal = document.getElementById('schoolsModal');
-            modal.style.display = 'block';
-            populateSchoolsModal();
-        }
-
-        // Close schools modal
-        function closeSchoolsModal() {
-            const modal = document.getElementById('schoolsModal');
-            modal.style.display = 'none';
-        }
-
-        // Share modal functions
-        function openShareModal() {
-            const modal = document.getElementById('shareModal');
-            modal.style.display = 'block';
-        }
-
-        function closeShareModal() {
-            const modal = document.getElementById('shareModal');
-            modal.style.display = 'none';
+        // Check if current user email matches any in the data
+        function checkUserSchools() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userEmail = urlParams.get('email');
+            if (userEmail) {
+                // Store email-based school IDs
+                schoolData.forEach((school, key) => {
+                    if (school.emails && school.emails.includes(userEmail)) {
+                        mySchoolIds.add(key);
+                    }
+                });
+                saveMySchools();
+            }
         }
 
         // Share functions with analytics and logging
