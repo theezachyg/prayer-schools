@@ -1483,13 +1483,20 @@
 
         // Load data from Google Sheets
         async function loadSchoolData() {
+            console.log('Loading school data from Google Sheets...');
             try {
                 const response = await fetch(SHEETS_API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
+                
+                console.log('Data loaded:', data);
                 
                 if (data.values && data.values.length > 1) {
                     processSheetData(data.values);
                 } else {
+                    console.warn('No data found in sheet');
                     document.getElementById('loading').style.display = 'none';
                 }
             } catch (error) {
@@ -1501,6 +1508,8 @@
 
         // Process sheet data - NOW WITH PRE-GEOCODED COORDINATES
         function processSheetData(rows) {
+            console.log(`Processing ${rows.length - 1} rows of data...`);
+            
             // Clear existing data
             schoolData.clear();
             
@@ -1508,7 +1517,7 @@
             const dataRows = rows.slice(1);
             
             // Group by school to count prayers
-            dataRows.forEach(row => {
+            dataRows.forEach((row, index) => {
                 const firstName = row[1]; // First name column
                 const lastName = row[2]; // Last name column
                 const email = row[3]?.toLowerCase() || ''; // Email column (lowercase for comparison)
@@ -1517,6 +1526,11 @@
                 const personName = `${firstName} ${lastName}`; // First + Last name
                 const lat = parseFloat(row[7]); // Latitude column H
                 const lng = parseFloat(row[8]); // Longitude column I
+                
+                if (!schoolName || !schoolAddress) {
+                    console.warn(`Skipping row ${index + 2}: missing school name or address`);
+                    return;
+                }
                 
                 const key = `${schoolName}|${schoolAddress}`;
                 
@@ -1540,6 +1554,8 @@
                     schoolInfo.emails.push(email);
                 }
             });
+
+            console.log(`Processed ${schoolData.size} unique schools`);
 
             // Check for user's schools
             checkUserSchools();
