@@ -150,40 +150,10 @@
         font-weight: bold;
       }
 
-      .alert-banner-close {
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-        padding: 0;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-      }
-
-      .alert-banner-close:hover {
-        opacity: 1;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
       @media (max-width: 768px) {
         .alert-banner {
-          padding: 12px 40px 12px 15px;
+          padding: 12px 15px;
           font-size: 14px;
-        }
-
-        .alert-banner-close {
-          right: 10px;
         }
 
         .alert-banner-icon {
@@ -753,13 +723,6 @@
           >
         </span>
       </div>
-      <button
-        class="alert-banner-close"
-        onclick="closeBanner()"
-        aria-label="Close banner"
-      >
-        ×
-      </button>
     </div>
 
     <div class="page-wrapper">
@@ -1161,45 +1124,6 @@
     </div>
 
     <script>
-      // Alert Banner Functions
-      function closeBanner() {
-        const banner = document.getElementById("alertBanner");
-        banner.classList.add("hiding");
-        // Store in localStorage that banner was closed
-        localStorage.setItem("alertBannerClosed", "true");
-        localStorage.setItem("alertBannerClosedDate", new Date().toISOString());
-
-        setTimeout(() => {
-          banner.style.display = "none";
-        }, 300);
-      }
-
-      // Check if banner should be shown
-      function shouldShowBanner() {
-        const wasClosed = localStorage.getItem("alertBannerClosed");
-        const closedDate = localStorage.getItem("alertBannerClosedDate");
-
-        if (!wasClosed) return true;
-
-        // Show again after 7 days
-        if (closedDate) {
-          const daysSinceClosed =
-            (new Date() - new Date(closedDate)) / (1000 * 60 * 60 * 24);
-          if (daysSinceClosed > 7) {
-            localStorage.removeItem("alertBannerClosed");
-            localStorage.removeItem("alertBannerClosedDate");
-            return true;
-          }
-        }
-
-        return false;
-      }
-
-      // Hide banner if it shouldn't be shown
-      if (!shouldShowBanner()) {
-        document.getElementById("alertBanner").style.display = "none";
-      }
-
       // Function to adopt Annunciation Catholic School
       function adoptAnnunciationSchool(event) {
         event.preventDefault();
