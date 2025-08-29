@@ -107,36 +107,6 @@
         min-height: 400px;
       }
 
-      /* Loading indicator styles */
-      .map-loading-indicator {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(43, 43, 43, 0.9);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 0.85em;
-        display: none;
-        z-index: 100;
-        border-left: 3px solid #36b7ff;
-      }
-
-      .map-loading-indicator.active {
-        display: block;
-        animation: pulse 1.5s ease-in-out infinite;
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.8;
-        }
-        50% {
-          opacity: 1;
-        }
-      }
-
       .header {
         background: rgba(17, 58, 81, 0.95);
         padding: 15px;
@@ -1177,11 +1147,7 @@
       <p>2025-2026 School Year</p>
     </div>
 
-    <div id="map">
-      <div class="map-loading-indicator" id="mapLoadingIndicator">
-        Loading markers...
-      </div>
-    </div>
+    <div id="map"></div>
 
     <div class="loading" id="loading">
       <div class="loading-spinner"></div>
@@ -1462,13 +1428,10 @@
       const SHEETS_API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${GOOGLE_MAPS_API_KEY}`;
 
       let map;
-      let markerClusterer;
+      let clusterer; // Renamed to avoid conflict
       let allMarkers = [];
-      let visibleMarkers = [];
       let schoolData = new Map();
       let mySchoolIds = new Set();
-      let isLoadingMarkers = false;
-      let boundsChangedTimeout;
 
       // State abbreviation to full name mapping
       const stateNames = {
@@ -1859,14 +1822,6 @@
             gestureHandling: "greedy",
           });
 
-          // Add listener for bounds changes (for lazy loading)
-          map.addListener("bounds_changed", () => {
-            clearTimeout(boundsChangedTimeout);
-            boundsChangedTimeout = setTimeout(() => {
-              updateVisibleMarkers();
-            }, 300); // Debounce for performance
-          });
-
           // Load data from Google Sheets
           loadSchoolData();
         } catch (error) {
@@ -1960,20 +1915,22 @@
         // Update statistics
         updateStatistics();
 
-        // Prepare all markers (but don't add to map yet)
-        prepareMarkers();
-
-        // Initialize with visible markers only
-        updateVisibleMarkers();
+        // Add all markers to map immediately for simplicity
+        addMarkersToMapWithClustering();
 
         // Initialize prayer notifications after data is loaded
         initializePrayerNotifications();
       }
 
-      // Prepare all markers without adding them to the map
-      function prepareMarkers() {
-        console.log("Preparing markers...");
+      // Simple approach - add all markers with clustering
+      function addMarkersToMapWithClustering() {
+        console.log("Adding markers to map...");
 
+        // Clear existing markers
+        allMarkers.forEach((marker) => marker.setMap(null));
+        allMarkers = [];
+
+        // Add a marker for each school
         schoolData.forEach((school, key) => {
           // Skip if no coordinates
           if (
@@ -1990,6 +1947,7 @@
 
           const marker = new google.maps.Marker({
             position: { lat: school.lat, lng: school.lng },
+            map: map, // Add directly to map
             title: school.name,
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
@@ -2024,127 +1982,56 @@
 
           // Store info window reference
           marker.infoWindow = infoWindow;
-          marker.schoolData = school;
           allMarkers.push(marker);
         });
 
-        console.log(`Prepared ${allMarkers.length} markers`);
-      }
-
-      // Update visible markers based on map bounds (lazy loading)
-      function updateVisibleMarkers() {
-        if (!map || isLoadingMarkers) return;
-
-        const bounds = map.getBounds();
-        if (!bounds) return;
-
-        isLoadingMarkers = true;
-        const loadingIndicator = document.getElementById("mapLoadingIndicator");
-        loadingIndicator.classList.add("active");
-
-        // Use requestAnimationFrame for smooth updates
-        requestAnimationFrame(() => {
-          const newVisibleMarkers = [];
-          const zoom = map.getZoom();
-
-          // Extend bounds slightly for smoother experience
-          const ne = bounds.getNorthEast();
-          const sw = bounds.getSouthWest();
-          const extendedBounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(
-              sw.lat() - Math.abs(ne.lat() - sw.lat()) * 0.1,
-              sw.lng() - Math.abs(ne.lng() - sw.lng()) * 0.1,
-            ),
-            new google.maps.LatLng(
-              ne.lat() + Math.abs(ne.lat() - sw.lat()) * 0.1,
-              ne.lng() + Math.abs(ne.lng() - sw.lng()) * 0.1,
-            ),
-          );
-
-          // Remove markers that are no longer visible
-          visibleMarkers.forEach((marker) => {
-            if (!extendedBounds.contains(marker.getPosition())) {
-              marker.setMap(null);
-            } else {
-              newVisibleMarkers.push(marker);
-            }
-          });
-
-          // Add new markers that are now visible
-          allMarkers.forEach((marker) => {
-            if (
-              extendedBounds.contains(marker.getPosition()) &&
-              !visibleMarkers.includes(marker)
-            ) {
-              // Only add markers at appropriate zoom levels for performance
-              if (zoom > 5 || allMarkers.length < 500) {
-                newVisibleMarkers.push(marker);
-              }
-            }
-          });
-
-          // Update visible markers
-          visibleMarkers = newVisibleMarkers;
-
-          // Update or create marker clusterer
-          if (markerClusterer) {
-            markerClusterer.clearMarkers();
-            markerClusterer.addMarkers(visibleMarkers);
-          } else {
-            markerClusterer = new MarkerClusterer(map, visibleMarkers, {
+        // Add clustering if library is available
+        setTimeout(() => {
+          // Check if MarkerClustererPlus is available (older version) or markerClusterer (newer)
+          if (typeof MarkerClusterer !== "undefined") {
+            clusterer = new MarkerClusterer(map, allMarkers, {
               imagePath:
                 "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
               gridSize: 60,
               maxZoom: 12,
               minimumClusterSize: 3,
-              styles: [
-                {
-                  textColor: "white",
-                  url:
-                    "data:image/svg+xml;base64," +
-                    btoa(`
-					<svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53">
-					  <circle cx="26.5" cy="26.5" r="25" fill="#36b7ff" fill-opacity="0.8" stroke="#ffffff" stroke-width="2"/>
-					</svg>
-				  `),
-                  height: 53,
-                  width: 53,
-                },
-                {
-                  textColor: "white",
-                  url:
-                    "data:image/svg+xml;base64," +
-                    btoa(`
-					<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">
-					  <circle cx="28" cy="28" r="27" fill="#ec9e23" fill-opacity="0.8" stroke="#ffffff" stroke-width="2"/>
-					</svg>
-				  `),
-                  height: 56,
-                  width: 56,
-                },
-                {
-                  textColor: "white",
-                  url:
-                    "data:image/svg+xml;base64," +
-                    btoa(`
-					<svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66">
-					  <circle cx="33" cy="33" r="32" fill="#113a51" fill-opacity="0.9" stroke="#36b7ff" stroke-width="2"/>
-					</svg>
-				  `),
-                  height: 66,
-                  width: 66,
-                },
-              ],
             });
+            console.log(`Added ${allMarkers.length} markers with clustering`);
+          } else if (window.markerClusterer) {
+            // Try the newer library format
+            const { MarkerClusterer } = window.markerClusterer;
+            clusterer = new MarkerClusterer({
+              map: map,
+              markers: allMarkers,
+              renderer: {
+                render: ({ count, position }) =>
+                  new google.maps.Marker({
+                    position,
+                    icon: {
+                      url: `data:image/svg+xml;base64,${btoa(`
+						<svg xmlns="http://www.w3.org/2000/svg" width="53" height="53" viewBox="0 0 53 53">
+						  <circle cx="26.5" cy="26.5" r="25" fill="#36b7ff" fill-opacity="0.8" stroke="#ffffff" stroke-width="2"/>
+						  <text x="26.5" y="31" font-size="14" fill="white" text-anchor="middle" font-weight="bold">${count}</text>
+						</svg>
+					  `)}`,
+                      scaledSize: new google.maps.Size(53, 53),
+                    },
+                    zIndex: Number(google.maps.Marker.MAX_ZINDEX) + count,
+                  }),
+              },
+            });
+            console.log(
+              `Added ${allMarkers.length} markers with new clustering library`,
+            );
+          } else {
+            console.log(
+              `Added ${allMarkers.length} markers without clustering - library not loaded`,
+            );
           }
+        }, 1000); // Wait a second for the library to load
 
-          console.log(`Showing ${visibleMarkers.length} markers in viewport`);
-
-          // Hide loading indicators
-          document.getElementById("loading").style.display = "none";
-          loadingIndicator.classList.remove("active");
-          isLoadingMarkers = false;
-        });
+        // Hide loading
+        document.getElementById("loading").style.display = "none";
       }
 
       // Update statistics
@@ -2416,27 +2303,30 @@
           return;
         }
 
-        // Load MarkerClusterer library
+        // First load Google Maps
+        const script = document.createElement("script");
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+        script.onerror = function () {
+          console.error("Failed to load Google Maps");
+          document.getElementById("loading").innerHTML =
+            '<p style="color: #e53e3e;">Failed to load Google Maps. Please refresh the page.</p>';
+        };
+        document.head.appendChild(script);
+
+        // Then load MarkerClusterer library
         const clusterScript = document.createElement("script");
         clusterScript.src =
           "https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js";
         clusterScript.async = true;
         clusterScript.onload = function () {
           console.log("MarkerClusterer library loaded");
-          // Now load Google Maps
-          const script = document.createElement("script");
-          script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
-          script.async = true;
-          script.defer = true;
-          script.onerror = function () {
-            console.error("Failed to load Google Maps");
-            document.getElementById("loading").innerHTML =
-              '<p style="color: #e53e3e;">Failed to load Google Maps. Please refresh the page.</p>';
-          };
-          document.head.appendChild(script);
         };
         clusterScript.onerror = function () {
-          console.error("Failed to load MarkerClusterer library");
+          console.error(
+            "Failed to load MarkerClusterer library - continuing without clustering",
+          );
         };
         document.head.appendChild(clusterScript);
       }
