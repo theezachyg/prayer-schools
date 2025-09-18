@@ -104,7 +104,7 @@
         flex: 1;
         width: 100%;
         position: relative;
-        min-height: 400px;
+        min-height: 400px; /* Ensure minimum height on mobile */
       }
 
       .header {
@@ -861,7 +861,7 @@
       /* Prayer notification widget - moved to top left */
       .prayer-notification {
         position: fixed;
-        top: 80px;
+        top: 80px; /* Just below header */
         left: 20px;
         background: rgba(43, 43, 43, 0.95);
         color: white;
@@ -921,7 +921,7 @@
       /* Mobile responsive updates */
       @media (max-width: 768px) {
         .prayer-notification {
-          top: 120px;
+          top: 120px; /* Adjust for mobile header */
           left: 15px;
           right: 15px;
           max-width: none;
@@ -953,11 +953,11 @@
       }
       @media (max-width: 768px) {
         body {
-          overflow-y: auto;
+          overflow-y: auto; /* Allow scrolling on mobile */
         }
 
         #map {
-          min-height: 50vh;
+          min-height: 50vh; /* Take at least 50% of viewport height */
         }
 
         .header {
@@ -1428,8 +1428,7 @@
       const SHEETS_API_URL = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${GOOGLE_MAPS_API_KEY}`;
 
       let map;
-      let clusterer; // Renamed to avoid conflict
-      let allMarkers = [];
+      let markers = [];
       let schoolData = new Map();
       let mySchoolIds = new Set();
 
@@ -1488,7 +1487,7 @@
         DC: "District of Columbia",
       };
 
-      // populateSchoolsModal function
+      // populateSchoolsModal function (missing in original)
       function populateSchoolsModal() {
         const modalBody = document.getElementById("modalSchoolsList");
 
@@ -1705,9 +1704,9 @@
         }
       }
 
-      // Initialize map with clustering support
+      // Initialize map
       function initMap() {
-        console.log("Initializing Google Map with clustering...");
+        console.log("Initializing Google Map...");
 
         // Detect mobile device
         const isMobile = window.innerWidth <= 768;
@@ -1715,18 +1714,20 @@
         try {
           map = new google.maps.Map(document.getElementById("map"), {
             center: { lat: 39.8283, lng: -98.5795 }, // Center of USA
-            zoom: isMobile ? 3 : 4,
+            zoom: isMobile ? 3 : 4, // Wider view on mobile
             styles: [
-              // (Keep all the existing style configuration)
+              // Hide all points of interest
               {
                 featureType: "poi",
                 elementType: "all",
                 stylers: [{ visibility: "off" }],
               },
+              // Hide business labels
               {
                 featureType: "poi.business",
                 stylers: [{ visibility: "off" }],
               },
+              // Water styling
               {
                 featureType: "water",
                 elementType: "geometry",
@@ -1737,6 +1738,7 @@
                 elementType: "labels",
                 stylers: [{ visibility: "off" }],
               },
+              // Landscape/Land styling
               {
                 featureType: "landscape",
                 elementType: "geometry",
@@ -1752,6 +1754,7 @@
                 elementType: "geometry",
                 stylers: [{ color: "#1a2332" }],
               },
+              // Administrative boundaries
               {
                 featureType: "administrative",
                 elementType: "geometry.stroke",
@@ -1767,6 +1770,7 @@
                 elementType: "geometry.stroke",
                 stylers: [{ color: "#3a4553" }, { weight: 0.5 }],
               },
+              // Minimal labels - only major ones
               {
                 featureType: "administrative",
                 elementType: "labels.text.fill",
@@ -1782,6 +1786,7 @@
                 elementType: "labels",
                 stylers: [{ visibility: "off" }],
               },
+              // Road network - very subtle
               {
                 featureType: "road",
                 elementType: "geometry",
@@ -1807,19 +1812,21 @@
                 elementType: "all",
                 stylers: [{ visibility: "off" }],
               },
+              // Transit
               {
                 featureType: "transit",
                 elementType: "all",
                 stylers: [{ visibility: "off" }],
               },
             ],
-            zoomControl: true,
+            // Mobile-friendly map controls
+            zoomControl: true, // Enable native Google Maps zoom controls
             mapTypeControl: false,
             scaleControl: false,
             streetViewControl: false,
             rotateControl: false,
             fullscreenControl: false,
-            gestureHandling: "greedy",
+            gestureHandling: "greedy", // Better touch handling
           });
 
           // Load data from Google Sheets
@@ -1856,27 +1863,26 @@
         }
       }
 
-      // Process sheet data with marker preparation
+      // Process sheet data - NOW WITH PRE-GEOCODED COORDINATES
       function processSheetData(rows) {
         console.log(`Processing ${rows.length - 1} rows of data...`);
 
         // Clear existing data
         schoolData.clear();
-        allMarkers = [];
 
         // Skip header row
         const dataRows = rows.slice(1);
 
         // Group by school to count prayers
         dataRows.forEach((row, index) => {
-          const firstName = row[1];
-          const lastName = row[2];
-          const email = row[3]?.toLowerCase() || "";
-          const schoolName = row[4];
-          const schoolAddress = row[5];
-          const personName = `${firstName} ${lastName}`;
-          const lat = parseFloat(row[7]);
-          const lng = parseFloat(row[8]);
+          const firstName = row[1]; // First name column
+          const lastName = row[2]; // Last name column
+          const email = row[3]?.toLowerCase() || ""; // Email column (lowercase for comparison)
+          const schoolName = row[4]; // School Name column
+          const schoolAddress = row[5]; // School Address column
+          const personName = `${firstName} ${lastName}`; // First + Last name
+          const lat = parseFloat(row[7]); // Latitude column H
+          const lng = parseFloat(row[8]); // Longitude column I
 
           if (!schoolName || !schoolAddress) {
             console.warn(
@@ -1898,6 +1904,7 @@
             });
           }
 
+          // Add person and email if not already in the list
           const schoolInfo = schoolData.get(key);
           if (!schoolInfo.people.includes(personName)) {
             schoolInfo.people.push(personName);
@@ -1915,8 +1922,8 @@
         // Update statistics
         updateStatistics();
 
-        // Add all markers to map immediately for simplicity
-        addMarkersToMapWithClustering();
+        // Add markers to map
+        addMarkersToMap();
 
         // Initialize prayer notifications after data is loaded
         initializePrayerNotifications();
@@ -1943,6 +1950,75 @@
         document.getElementById("totalSchools").textContent = totalSchools;
         document.getElementById("totalPeople").textContent = totalPeople;
         document.getElementById("totalStates").textContent = states.size;
+      }
+
+      // Add markers to map
+      function addMarkersToMap() {
+        console.log("Adding markers to map...");
+
+        // Clear existing markers
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+
+        // Add a marker for each school
+        schoolData.forEach((school, key) => {
+          // Skip if no coordinates
+          if (
+            !school.lat ||
+            !school.lng ||
+            isNaN(school.lat) ||
+            isNaN(school.lng)
+          ) {
+            console.warn(
+              `Skipping school without valid coordinates: ${school.name}`,
+            );
+            return;
+          }
+
+          const marker = new google.maps.Marker({
+            position: { lat: school.lat, lng: school.lng },
+            map: map,
+            title: school.name,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 8,
+              fillColor: "#36b7ff",
+              fillOpacity: 0.8,
+              strokeColor: "#ffffff",
+              strokeWeight: 2,
+            },
+          });
+
+          // Create info window content
+          const infoContent = `
+                    <div class="info-window">
+                        <h4>${school.name}</h4>
+                        <p>${school.address}</p>
+                        <p class="prayer-count">${school.people.length} ${school.people.length === 1 ? "person" : "people"} praying</p>
+                    </div>
+                `;
+
+          const infoWindow = new google.maps.InfoWindow({
+            content: infoContent,
+          });
+
+          marker.addListener("click", () => {
+            // Close any open info windows
+            markers.forEach((m) => {
+              if (m.infoWindow) m.infoWindow.close();
+            });
+            infoWindow.open(map, marker);
+          });
+
+          // Store info window reference
+          marker.infoWindow = infoWindow;
+          markers.push(marker);
+        });
+
+        // Hide loading
+        document.getElementById("loading").style.display = "none";
+
+        console.log(`Added ${markers.length} markers to map`);
       }
 
       // Initialize prayer notifications
@@ -2015,7 +2091,7 @@
         }, 500);
       }
 
-      // Share functions
+      // Share functions with analytics and logging
       function shareOnFacebook() {
         const url = encodeURIComponent(window.location.href);
         const text = encodeURIComponent(
@@ -2026,6 +2102,8 @@
           "_blank",
           "width=600,height=400",
         );
+
+        // Track and log share
         trackAndLogShare("facebook");
       }
 
@@ -2039,6 +2117,8 @@
           "_blank",
           "width=600,height=400",
         );
+
+        // Track and log share
         trackAndLogShare("twitter");
       }
 
@@ -2049,6 +2129,8 @@
           "_blank",
           "width=600,height=400",
         );
+
+        // Track and log share
         trackAndLogShare("linkedin");
       }
 
@@ -2058,6 +2140,8 @@
           "Join me in praying for our nation's schools during the 21 Days of Prayer!",
         );
         window.open(`https://t.me/share/url?url=${url}&text=${text}`, "_blank");
+
+        // Track and log share
         trackAndLogShare("telegram");
       }
 
@@ -2073,6 +2157,8 @@
             `Blessings`,
         );
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
+
+        // Track and log share
         trackAndLogShare("email");
       }
 
@@ -2080,13 +2166,18 @@
         const text = encodeURIComponent(
           `Join me in praying for our nation's schools during the 21 Days of Prayer! See the map: ${window.location.href}`,
         );
+        // Try to detect mobile and use appropriate SMS link
         const userAgent =
           navigator.userAgent || navigator.vendor || window.opera;
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          // iOS
           window.open(`sms:&body=${text}`);
         } else {
+          // Android and others
           window.open(`sms:?body=${text}`);
         }
+
+        // Track and log share
         trackAndLogShare("sms");
       }
 
@@ -2100,24 +2191,31 @@
           "_blank",
           "width=850,height=600",
         );
+
+        // Track and log share
         trackAndLogShare("reddit");
       }
 
+      // Unified tracking and logging function
       function trackAndLogShare(
         platform,
         recipientEmail = "",
         recipientName = "",
         yourName = "",
       ) {
+        // Track with Google Analytics
         if (typeof gtag !== "undefined") {
           gtag("event", "share", {
             event_category: "social",
             event_label: platform + "_map",
           });
         }
+
+        // Log to Google Sheets
         logShareToSheets(platform, recipientEmail, recipientName, yourName);
       }
 
+      // Log share activity to Google Sheets
       function logShareToSheets(
         platform,
         recipientEmail = "",
@@ -2138,6 +2236,7 @@
           pageUrl: window.location.href,
         };
 
+        // Send to Google Sheets (fire and forget)
         fetch(SHEETS_URL, {
           method: "POST",
           mode: "no-cors",
@@ -2168,9 +2267,13 @@
             `Blessings,\n${yourName}`,
         );
 
+        // Log this specific email share with recipient info
         trackAndLogShare("email_invite", friendEmail, friendName, yourName);
+
+        // Open email client
         window.location.href = `mailto:${friendEmail}?subject=${subject}&body=${body}`;
 
+        // Show success message
         const form = document.getElementById("emailShareForm");
         const originalHTML = form.innerHTML;
         form.innerHTML =
@@ -2182,7 +2285,7 @@
         }, 3000);
       }
 
-      // Load Google Maps API with MarkerClusterer
+      // Load Google Maps API
       function loadGoogleMapsAPI() {
         if (!GOOGLE_MAPS_API_KEY) {
           console.error("Google Maps API key not configured");
@@ -2191,7 +2294,6 @@
           return;
         }
 
-        // First load Google Maps
         const script = document.createElement("script");
         script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
         script.async = true;
@@ -2202,21 +2304,6 @@
             '<p style="color: #e53e3e;">Failed to load Google Maps. Please refresh the page.</p>';
         };
         document.head.appendChild(script);
-
-        // Then load MarkerClusterer library
-        const clusterScript = document.createElement("script");
-        clusterScript.src =
-          "https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js";
-        clusterScript.async = true;
-        clusterScript.onload = function () {
-          console.log("MarkerClusterer library loaded");
-        };
-        clusterScript.onerror = function () {
-          console.error(
-            "Failed to load MarkerClusterer library - continuing without clustering",
-          );
-        };
-        document.head.appendChild(clusterScript);
       }
 
       // Initialize everything when page loads
