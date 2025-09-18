@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>21 Days of Prayer 2025 - Schools Map</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          sans-serif;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        overflow: hidden;
+      }
+
+      #map-container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #canvas {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+      }
+
+      #title {
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      #title h1 {
+        margin: 0;
+        font-size: 48px;
+        font-weight: 700;
+        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+      }
+
+      #title p {
+        margin: 8px 0 0 0;
+        font-size: 24px;
+        font-weight: 300;
+        opacity: 0.95;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      #stats {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 16px 32px;
+        border-radius: 8px;
+        backdrop-filter: blur(10px);
+        pointer-events: none;
+      }
+
+      #stats span {
+        font-size: 36px;
+        font-weight: 700;
+        color: #ffd700;
+        text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+      }
+
+      #export-btn {
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      #export-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      #file-input-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        z-index: 2000;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 40px;
+        border-radius: 12px;
+        backdrop-filter: blur(10px);
+      }
+
+      #file-input-container h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-size: 28px;
+      }
+
+      #file-input-container p {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 30px;
+        font-size: 16px;
+      }
+
+      #file-input {
+        display: none;
+      }
+
+      #file-label {
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
+
+      #file-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+      }
+
+      .loading {
+        color: white;
+        font-size: 24px;
+        margin-top: 20px;
+        display: none;
+      }
+
+      .error {
+        color: #ff6b6b;
+        margin-top: 20px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map-container">
+      <div id="title">
+        <h1>21 DAYS OF PRAYER</h1>
+        <p>FOR OUR NATION'S SCHOOLS</p>
+      </div>
+
+      <div id="file-input-container">
+        <h2>Load Your School Data</h2>
+        <p>Select your CSV file to generate the 4K map</p>
+        <p style="font-size: 14px; opacity: 0.7">
+          Expected file: [LIVE] 21 Days of Prayer 2025 - Sheet1 (1).csv
+        </p>
+        <input type="file" id="file-input" accept=".csv" />
+        <label for="file-input" id="file-label">Choose CSV File</label>
+        <div class="loading">Processing data...</div>
+        <div class="error"></div>
+      </div>
+
+      <canvas
+        id="canvas"
+        width="3840"
+        height="2160"
+        style="display: none"
+      ></canvas>
+
+      <div id="stats" style="display: none">
+        <span id="school-count">0</span> Schools Adopted
+      </div>
+
+      <button id="export-btn" onclick="exportMap()" style="display: none">
+        Export 4K Image
+      </button>
+    </div>
+
+    <script>
+      const width = 3840;
+      const height = 2160;
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Set canvas display size (scaled for viewport)
+      const scale = Math.min(
+        (window.innerWidth / width) * 0.9,
+        (window.innerHeight / height) * 0.9,
+      );
+      canvas.style.width = width * scale + "px";
+      canvas.style.height = height * scale + "px";
+
+      // Map styling
+      const bgColor = "#0a0e27";
+      const landColor = "#1a2f4a";
+      const strokeColor = "#2a4a7a";
+      const pointColor = "#FFD700";
+      const glowColor = "#FFA500";
+
+      // File input handler
+      document
+        .getElementById("file-input")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            document.querySelector(".loading").style.display = "block";
+            document.querySelector(".error").style.display = "none";
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              try {
+                const csvText = e.target.result;
+                processAndRenderMap(csvText);
+              } catch (error) {
+                showError("Error reading file: " + error.message);
+              }
+            };
+            reader.readAsText(file);
+          }
+        });
+
+      async function processAndRenderMap(csvText) {
+        try {
+          // Parse CSV
+          const schools = Papa.parse(csvText, {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: true,
+            delimitersToGuess: [",", "\t", "|", ";"],
+          }).data.filter(
+            (d) =>
+              d.Latitude &&
+              d.Longitude &&
+              !isNaN(d.Latitude) &&
+              !isNaN(d.Longitude),
+          );
+
+          if (schools.length === 0) {
+            throw new Error("No valid coordinates found in the CSV file");
+          }
+
+          console.log(`Found ${schools.length} schools with valid coordinates`);
+
+          // Load US topology
+          const us = await d3.json(
+            "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json",
+          );
+
+          // Include all US schools (continental, Alaska, and Hawaii)
+          // Alaska roughly: Lat 51-72, Long -130 to -180
+          // Hawaii roughly: Lat 18-23, Long -154 to -161
+          // Continental US: Lat 24-50, Long -66 to -125
+          const usSchools = schools.filter((d) => {
+            // Continental US
+            if (
+              d.Latitude > 24 &&
+              d.Latitude < 50 &&
+              d.Longitude > -125 &&
+              d.Longitude < -66
+            )
+              return true;
+            // Alaska
+            if (
+              d.Latitude > 51 &&
+              d.Latitude < 72 &&
+              (d.Longitude < -130 || d.Longitude > 170)
+            )
+              return true;
+            // Hawaii
+            if (
+              d.Latitude > 18 &&
+              d.Latitude < 23 &&
+              d.Longitude > -161 &&
+              d.Longitude < -154
+            )
+              return true;
+            return false;
+          });
+
+          console.log(
+            `${usSchools.length} schools in US (including Alaska and Hawaii)`,
+          );
+
+          // Check for Alaska and Hawaii schools
+          const alaskaSchools = schools.filter(
+            (d) => d.Latitude > 51 && d.Latitude < 72,
+          );
+          const hawaiiSchools = schools.filter(
+            (d) =>
+              d.Latitude > 18 &&
+              d.Latitude < 23 &&
+              d.Longitude > -161 &&
+              d.Longitude < -154,
+          );
+          console.log(
+            `Alaska schools: ${alaskaSchools.length}, Hawaii schools: ${hawaiiSchools.length}`,
+          );
+
+          // Hide input container and show canvas
+          document.getElementById("file-input-container").style.display =
+            "none";
+          canvas.style.display = "block";
+          document.getElementById("stats").style.display = "block";
+          document.getElementById("export-btn").style.display = "block";
+
+          // Update count
+          document.getElementById("school-count").textContent =
+            usSchools.length.toLocaleString();
+
+          // Setup projection - Albers USA for beautiful US visualization
+          const projection = d3
+            .geoAlbersUsa()
+            .scale(4000) // Zoomed out from 4800 to 4000
+            .translate([width / 2, height / 2]);
+
+          const path = d3.geoPath().projection(projection).context(ctx);
+
+          // Clear and set background
+          ctx.fillStyle = bgColor;
+          ctx.fillRect(0, 0, width, height);
+
+          // Draw land masses
+          ctx.fillStyle = landColor;
+          ctx.strokeStyle = strokeColor;
+          ctx.lineWidth = 2;
+
+          // Draw states
+          const land = topojson.feature(us, us.objects.states);
+          ctx.beginPath();
+          path(land);
+          ctx.fill();
+          ctx.stroke();
+
+          // Draw state borders
+          ctx.strokeStyle = strokeColor;
+          ctx.lineWidth = 1;
+          ctx.globalAlpha = 0.5;
+          ctx.beginPath();
+          path(topojson.mesh(us, us.objects.states, (a, b) => a !== b));
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+
+          // Create point density map for glow effect
+          const pointDensity = {};
+          usSchools.forEach((school) => {
+            const coords = projection([school.Longitude, school.Latitude]);
+            if (coords) {
+              const key = `${Math.round(coords[0] / 20)}_${Math.round(coords[1] / 20)}`;
+              pointDensity[key] = (pointDensity[key] || 0) + 1;
+            }
+          });
+
+          // Draw schools with glow effect
+          ctx.shadowBlur = 0;
+
+          // First pass - draw glow for dense areas
+          ctx.globalCompositeOperation = "screen";
+          ctx.globalAlpha = 0.15;
+
+          usSchools.forEach((school) => {
+            const coords = projection([school.Longitude, school.Latitude]);
+            if (coords) {
+              const key = `${Math.round(coords[0] / 20)}_${Math.round(coords[1] / 20)}`;
+              const density = pointDensity[key] || 1;
+
+              if (density > 3) {
+                ctx.beginPath();
+                ctx.fillStyle = glowColor;
+                ctx.arc(
+                  coords[0],
+                  coords[1],
+                  Math.min(density * 3, 30),
+                  0,
+                  2 * Math.PI,
+                );
+                ctx.fill();
+              }
+            }
+          });
+
+          // Second pass - draw actual points
+          ctx.globalCompositeOperation = "source-over";
+          ctx.globalAlpha = 1;
+
+          usSchools.forEach((school) => {
+            const coords = projection([school.Longitude, school.Latitude]);
+            if (coords) {
+              // Draw point
+              ctx.beginPath();
+              ctx.fillStyle = pointColor;
+              ctx.arc(coords[0], coords[1], 3, 0, 2 * Math.PI);
+              ctx.fill();
+
+              // Add subtle glow
+              ctx.globalAlpha = 0.3;
+              ctx.beginPath();
+              ctx.fillStyle = glowColor;
+              ctx.arc(coords[0], coords[1], 6, 0, 2 * Math.PI);
+              ctx.fill();
+              ctx.globalAlpha = 1;
+            }
+          });
+
+          // Add decorative border
+          ctx.strokeStyle = "rgba(255,255,255,0.1)";
+          ctx.lineWidth = 4;
+          ctx.strokeRect(2, 2, width - 4, height - 4);
+
+          console.log("Map rendered successfully!");
+        } catch (error) {
+          showError("Error processing data: " + error.message);
+          console.error(error);
+        }
+      }
+
+      function showError(message) {
+        document.querySelector(".loading").style.display = "none";
+        const errorEl = document.querySelector(".error");
+        errorEl.textContent = message;
+        errorEl.style.display = "block";
+      }
+
+      function exportMap() {
+        canvas.toBlob(
+          (blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "21_Days_Prayer_Schools_Map_4K.png";
+            a.click();
+            URL.revokeObjectURL(url);
+          },
+          "image/png",
+          1.0,
+        );
+      }
+    </script>
+  </body>
+</html>

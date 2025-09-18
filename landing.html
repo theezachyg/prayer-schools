@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prayer for Our Nation's Schools - Join the Movement</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://schoolprayer.bridgebuilders.net/pray"
+    />
+    <meta property="og:title" content="Prayer for Our Nation's Schools" />
+    <meta
+      property="og:description"
+      content="Join thousands praying for protection, revival, and transformation in America's schools."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.prod.website-files.com/642ce3ba6c45ae6f28f9515f/689138cffa79673f9034b6aa_21dofprayerschools.png"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0SBB5GCNJN"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-0SBB5GCNJN");
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #113a51;
+        --accent-blue: #36b7ff;
+        --success-green: #4caf50;
+        --danger-red: #ef4444;
+        --text-dark: #1f2937;
+        --text-medium: #4b5563;
+        --text-light: #6b7280;
+        --bg-light: #f9fafb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: linear-gradient(to bottom, #f0f9ff, #ffffff);
+        color: var(--text-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      /* Header Navigation */
+      .header {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-sm);
+        border-bottom: 1px solid rgba(17, 58, 81, 0.08);
+      }
+
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+      }
+
+      .logo {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue),
+          var(--primary-blue)
+        );
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      .logo span.light {
+        font-weight: 400;
+        color: var(--text-medium);
+      }
+
+      /* Hamburger Menu */
+      .hamburger {
+        display: block;
+        cursor: pointer;
+        z-index: 1100;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      .hamburger:hover {
+        background: var(--bg-light);
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--primary-blue);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+
+      /* Mobile Navigation Menu */
+      .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: 65px;
+        width: 100%;
+        max-width: 360px;
+        height: calc(100vh - 65px);
+        background: white;
+        transition: all 0.3s ease;
+        overflow-y: auto;
+        box-shadow: var(--shadow-xl);
+        border-left: 1px solid rgba(17, 58, 81, 0.08);
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .nav-menu ul {
+        list-style: none;
+        padding: 1.5rem;
+      }
+
+      .nav-menu li {
+        margin: 0.5rem 0;
+      }
+
+      .nav-menu a {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: block;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-menu a:hover {
+        background: var(--bg-light);
+        color: var(--accent-blue);
+        transform: translateX(4px);
+      }
+
+      /* Hero Section */
+      .hero-section {
+        margin-top: 65px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          #1e5173 100%
+        );
+        color: white;
+        padding: 5rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("https://images.squarespace-cdn.com/content/v1/62f1b617cf9c26364ad90dbc/e389cb7c-2cad-45bc-a730-9005a075f5c3/AdobeStock_374844970.jpeg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        z-index: 0;
+      }
+
+      .hero-content {
+        max-width: 1024px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-content h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-content .subtitle {
+        font-size: 1.25rem;
+        font-weight: 300;
+        opacity: 0.95;
+        line-height: 1.6;
+        max-width: 700px;
+      }
+
+      /* Action Bar */
+      .action-bar {
+        background: white;
+        border-bottom: 1px solid rgba(17, 58, 81, 0.08);
+        padding: 1.5rem;
+        position: sticky;
+        top: 65px;
+        z-index: 100;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .action-container {
+        max-width: 1024px;
+        margin: 0 auto;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 0.75rem;
+      }
+
+      /* Content Wrapper */
+      .content-wrapper {
+        max-width: 1280px;
+        margin: 3rem auto;
+        padding: 0 1.5rem;
+      }
+
+      /* Prayer Section */
+      .prayer-section {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(17, 58, 81, 0.06);
+      }
+
+      .prayer-section h2 {
+        font-family: "Playfair Display", serif;
+        color: var(--primary-blue);
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 1rem;
+      }
+
+      .prayer-section h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-blue), transparent);
+        border-radius: 2px;
+      }
+
+      .prayer-content {
+        background: linear-gradient(
+          135deg,
+          rgba(54, 183, 255, 0.03),
+          rgba(54, 183, 255, 0.01)
+        );
+        border-left: 4px solid var(--accent-blue);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .prayer-content p {
+        color: var(--text-medium);
+        line-height: 1.8;
+        margin-bottom: 1.25rem;
+      }
+
+      .prayer-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .prayer-content strong {
+        color: var(--primary-blue);
+        font-weight: 600;
+      }
+
+      .scripture-ref {
+        color: var(--accent-blue);
+        font-weight: 600;
+      }
+
+      .decree-section {
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.05),
+          rgba(124, 58, 237, 0.02)
+        );
+        border-left: 4px solid #7c3aed;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .decree-section h3 {
+        color: #7c3aed;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .decree-section p {
+        color: var(--text-dark);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+
+      /* Action Cards Grid */
+      .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+      }
+
+      .action-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(17, 58, 81, 0.06);
+        transition: all 0.3s ease;
+      }
+
+      .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .action-card.featured {
+        background: linear-gradient(
+          135deg,
+          rgba(54, 183, 255, 0.05),
+          rgba(54, 183, 255, 0.02)
+        );
+        border: 2px solid rgba(54, 183, 255, 0.2);
+      }
+
+      .action-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue),
+          var(--primary-blue)
+        );
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 1.5rem;
+      }
+
+      .action-card h3 {
+        color: var(--primary-blue);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .action-card p {
+        color: var(--text-medium);
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent-blue), #2a90cc);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: var(--text-dark);
+        border: 1px solid rgba(17, 58, 81, 0.12);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Stats Section */
+      .stats-section {
+        background: linear-gradient(135deg, #f8f9fa, #f3f4f6);
+        border-radius: 12px;
+        padding: 3rem;
+        margin: 3rem 0;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .stat-item {
+        padding: 1rem;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-blue);
+        line-height: 1;
+      }
+
+      .stat-label {
+        color: var(--text-medium);
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Resources Grid */
+      .resources-section {
+        margin: 3rem 0;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .section-header h2 {
+        font-family: "Playfair Display", serif;
+        color: var(--primary-blue);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .section-header p {
+        color: var(--text-medium);
+        font-size: 1.125rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .resource-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(17, 58, 81, 0.06);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .resource-card h4 {
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .resource-card p {
+        color: var(--text-medium);
+        font-size: 0.875rem;
+        line-height: 1.4;
+      }
+
+      /* CTA Section */
+      .cta-section {
+        background: linear-gradient(135deg, var(--primary-blue), #1e5173);
+        color: white;
+        border-radius: 16px;
+        padding: 3rem;
+        margin: 3rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 15s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+      }
+
+      .cta-section h2 {
+        color: white;
+        margin-bottom: 1rem;
+        position: relative;
+        font-family: "Playfair Display", serif;
+        font-size: 2.5rem;
+      }
+
+      .cta-section p {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        position: relative;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-section .btn {
+        background: white;
+        color: var(--primary-blue);
+      }
+
+      /* Footer */
+      footer {
+        background: #2b2b2b;
+        color: #d2f8ff;
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+        margin-top: 6rem;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 1024px) {
+        .action-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+
+        .prayer-section {
+          padding: 1.5rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .resources-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="header">
+      <div class="nav-container">
+        <a href="homepage.html" class="logo">
+          <div class="logo-icon">21</div>
+          <span>DAYS OF PRAYER</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="index.html">Register & Adopt</a></li>
+          <li><a href="map.html">Prayer Map</a></li>
+          <li><a href="prayer-walking-tips.html">Prayer Walking Tips</a></li>
+          <li><a href="canopy-of-protection.html">Canopy of Protection</a></li>
+          <li>
+            <a href="battleground-schools.html">Battleground for Schools</a>
+          </li>
+          <li>
+            <a href="university-prayer-guide.html">University Prayer Guide</a>
+          </li>
+          <li><a href="student-prayer-guide.html">Student Prayer Guide</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>Prayer for Our Nation's Schools</h1>
+        <p class="subtitle">
+          Stand with thousands across America in prayer for protection, revival,
+          and transformation in our schools
+        </p>
+      </div>
+    </section>
+
+    <!-- Action Bar -->
+    <div class="action-bar">
+      <div class="action-container">
+        <div class="action-buttons">
+          <a href="prayer-for-schools.pdf" class="btn btn-primary" download>
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+            </svg>
+            Download Prayer
+          </a>
+          <button class="btn btn-secondary" onclick="shareThisPrayer()">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"
+              />
+            </svg>
+            Share Prayer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+      <!-- Prayer Section -->
+      <section class="prayer-section">
+        <h2>Join Us in This Powerful Prayer</h2>
+
+        <div class="prayer-content">
+          <p>
+            Father, we stand before You today on behalf of the schools of our
+            nation. We repent for allowing You to be removed from our
+            classrooms, hallways, and culture. Forgive us for yielding ground to
+            darkness.
+          </p>
+
+          <p>
+            Lord, we grieve the tragic shootings in our schools and the violence
+            that has shaken our nation. We cry out for Your mercy and Your
+            protection over our children. Your Word says,
+            <strong
+              >"The Lord is faithful, and He will strengthen you and protect you
+              from the evil one"</strong
+            >
+            <span class="scripture-ref">(2 Thessalonians 3:3)</span>. We claim
+            this promise over every student, teacher, and staff member.
+          </p>
+
+          <p>
+            We dedicate every school in America—public, private, charter,
+            homeschool, and every college and university—to You. We consecrate
+            each campus as holy ground where Your presence is welcome and Your
+            purposes prevail. Let every classroom be a refuge of safety, a place
+            of peace, a center of learning, and a wellspring of friendship.
+          </p>
+
+          <p>
+            Father, we ask You to station Your angels at the doors and hallways
+            of our schools, to surround our campuses with a hedge of protection
+            <span class="scripture-ref">(Psalm 91:11)</span>. May no weapon
+            formed against our children prosper
+            <span class="scripture-ref">(Isaiah 54:17)</span>. Drive back every
+            spirit of violence, confusion, and fear, and release the light of
+            Christ and the peace of God into every classroom.
+          </p>
+
+          <p>
+            We ask for revival in our schools, O Lord. Save our children, heal
+            broken hearts, and let a generation rise up that knows You and lives
+            for You. We pray this in Jesus' mighty name.
+          </p>
+
+          <p
+            style="
+              font-weight: 600;
+              color: var(--primary-blue);
+              margin-top: 1.5rem;
+            "
+          >
+            Amen.
+          </p>
+        </div>
+
+        <div class="decree-section">
+          <h3>Our Decree</h3>
+          <p>
+            We decree that God's plumbline of unshakable truth is set again in
+            America's schools.
+          </p>
+          <p>
+            We declare that classrooms are restored as places of learning and
+            moral strength—violence driven out by peace, confusion shattered by
+            clarity, despair overwhelmed by hope. What the enemy meant for evil,
+            God is turning for good.
+          </p>
+          <p>
+            <strong
+              >America's children are taught of the Lord, and great is their
+              peace</strong
+            >
+            <span class="scripture-ref">(Isaiah 54:13)</span>.
+          </p>
+        </div>
+      </section>
+
+      <!-- Action Cards -->
+      <div class="action-grid">
+        <div class="action-card featured">
+          <div class="action-icon">🏫</div>
+          <h3>Adopt a School</h3>
+          <p>
+            Commit to pray for a specific school for 21 days. Join thousands
+            across the nation in covering our schools with prayer.
+          </p>
+          <a href="index.html" class="btn btn-primary">Adopt a School Now</a>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">🗺️</div>
+          <h3>View Prayer Map</h3>
+          <p>
+            See schools being prayed for across America. Find schools in your
+            area that need prayer coverage.
+          </p>
+          <a href="map.html" class="btn btn-secondary">Explore Map</a>
+        </div>
+
+        <div class="action-card">
+          <div class="action-icon">📤</div>
+          <h3>Share This Prayer</h3>
+          <p>
+            Multiply the impact by sharing this prayer with your church,
+            friends, and community.
+          </p>
+          <button class="btn btn-secondary" onclick="shareThisPrayer()">
+            Share Prayer
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Section -->
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">50M+</div>
+            <div class="stat-label">Students Need Prayer</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">130K</div>
+            <div class="stat-label">Schools Nationwide</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">21</div>
+            <div class="stat-label">Days of Prayer</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1000s</div>
+            <div class="stat-label">People Praying</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resources Section -->
+      <section class="resources-section">
+        <div class="section-header">
+          <h2>Prayer Resources</h2>
+          <p>Equip yourself with powerful tools for effective intercession</p>
+        </div>
+
+        <div class="resources-grid">
+          <a href="prayer-walking-tips.html" class="resource-card">
+            <h4>🚶 Prayer Walking Tips</h4>
+            <p>
+              Practical guidance for prayer walking your local schools with
+              wisdom and spiritual effectiveness
+            </p>
+          </a>
+
+          <a href="canopy-of-protection.html" class="resource-card">
+            <h4>🛡️ Canopy of Protection</h4>
+            <p>
+              Powerful prayers declaring God's protective covering over schools
+              and students
+            </p>
+          </a>
+
+          <a href="student-prayer-guide.html" class="resource-card">
+            <h4>👨‍🎓 Student Prayer Guide</h4>
+            <p>Empower students to be spiritual influencers on their campus</p>
+          </a>
+
+          <a href="university-prayer-guide.html" class="resource-card">
+            <h4>🎓 University Prayer Guide</h4>
+            <p>
+              21-day comprehensive prayer guide for colleges and universities
+            </p>
+          </a>
+
+          <a href="battleground-schools.html" class="resource-card">
+            <h4>⚔️ Battleground for Schools</h4>
+            <p>Powerful testimonies of transformation when God's people pray</p>
+          </a>
+
+          <a href="homepage.html" class="resource-card">
+            <h4>📚 All Resources</h4>
+            <p>Access our complete library of prayer resources and materials</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-section">
+        <h2>Every School Covered in Prayer</h2>
+        <p>
+          Together, we can see every school in America covered in prayer. Will
+          you join us?
+        </p>
+        <a href="index.html" class="btn">Start Praying Today</a>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div style="max-width: 800px; margin: 0 auto">
+        <a
+          href="https://bridgebuilders.net"
+          target="_blank"
+          style="color: white; text-decoration: none; font-size: 16px"
+        >
+          <span style="font-weight: 900">BRIDGE</span
+          ><span style="font-weight: 300">BUILDERS</span>
+        </a>
+
+        <p style="margin: 8px 0; font-size: 12px">
+          P.O. Box 31415, Phoenix, AZ 85046 USA
+        </p>
+
+        <p style="margin: 10px 0; font-size: 11px">
+          BridgeBuilders Int'l Leadership Network ©
+          <span id="currentYear"></span>. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Set current year
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      // Toggle mobile menu
+      function toggleMenu() {
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      }
+
+      // Share functionality
+      function shareThisPrayer() {
+        if (navigator.share) {
+          navigator
+            .share({
+              title: "Prayer for Our Nation's Schools",
+              text: "Join me in praying for protection, revival, and transformation in America's schools.",
+              url: window.location.href,
+            })
+            .catch(console.error);
+        } else {
+          // Fallback to copying link
+          navigator.clipboard.writeText(window.location.href).then(
+            function () {
+              alert("Prayer link copied to clipboard!");
+            },
+            function () {
+              alert("Please copy this link: " + window.location.href);
+            },
+          );
+        }
+      }
+
+      // Track engagement
+      document.querySelectorAll(".btn").forEach((button) => {
+        button.addEventListener("click", function (e) {
+          if (typeof gtag !== "undefined") {
+            gtag("event", "click", {
+              event_category: "engagement",
+              event_label: this.textContent.trim(),
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -887,31 +887,6 @@
                 body: JSON.stringify(shareData)
             }).catch(error => console.error('Error logging share:', error));
         }
-        
-        // Copy personal link to clipboard
-        function copyPersonalLink() {
-            const linkInput = document.getElementById('personalLink');
-            linkInput.select();
-            linkInput.setSelectionRange(0, 99999); // For mobile devices
-            
-            try {
-                document.execCommand('copy');
-                
-                // Show success feedback
-                const button = event.target;
-                const originalText = button.textContent;
-                button.textContent = '✓ Copied!';
-                button.style.background = '#10b981';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '#36b7ff';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy:', err);
-                alert('Please manually copy the link');
-            }
-        }
     </script>
     
     <!-- Load configuration -->
@@ -1387,28 +1362,6 @@
                     
                     document.getElementById('selectedSchoolsList').innerHTML = schoolsListHTML;
                     
-                    // Generate personal link for adding more schools
-                    const personalLink = `${window.location.origin}/?firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&email=${encodeURIComponent(email)}`;
-                    
-                    // Add personal link section to success message
-                    const successMessage = document.getElementById('successMessage');
-                    const shareSection = successMessage.querySelector('.share-section');
-                    
-                    // Insert personal link section before share section
-                    const linkSection = document.createElement('div');
-                    linkSection.style.cssText = 'margin: 20px 0; padding: 20px; background: rgba(54, 183, 255, 0.1); border-radius: 8px; border: 1px solid #36b7ff;';
-                    linkSection.innerHTML = `
-                        <h3 style="color: #36b7ff; font-size: 1em; margin-bottom: 10px; text-transform: uppercase;">Want to Add More Schools Later?</h3>
-                        <p style="margin-bottom: 10px; font-size: 0.9em;">Save this link to easily add more schools throughout the 21 days:</p>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                            <input type="text" value="${personalLink}" readonly style="flex: 1; min-width: 200px; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid #36b7ff; border-radius: 4px; color: white; font-size: 0.8em;" id="personalLink">
-                            <button onclick="copyPersonalLink()" style="background: #36b7ff; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8em;">Copy Link</button>
-                        </div>
-                        <p style="margin-top: 10px; font-size: 0.85em; color: #d2f8ff;">💡 Tip: Bookmark this link or save it in your notes!</p>
-                    `;
-                    
-                    shareSection.parentNode.insertBefore(linkSection, shareSection);
-                    
                     // Show success message
                     document.getElementById('adoptSchoolForm').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
@@ -1518,74 +1471,10 @@
             }, 500);
         }
 
-// Pre-fill form from URL parameters
-function prefillFormFromURL() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const firstName = urlParams.get('firstName');
-    const lastName = urlParams.get('lastName');
-    const email = urlParams.get('email');
-    
-    let fieldsFilled = false;
-    
-    if (firstName) {
-        const firstNameField = document.getElementById('firstName');
-        if (firstNameField) {
-            firstNameField.value = decodeURIComponent(firstName);
-            fieldsFilled = true;
-        }
-    }
-    
-    if (lastName) {
-        const lastNameField = document.getElementById('lastName');
-        if (lastNameField) {
-            lastNameField.value = decodeURIComponent(lastName);
-            fieldsFilled = true;
-        }
-    }
-    
-    if (email) {
-        const emailField = document.getElementById('email');
-        if (emailField) {
-            emailField.value = decodeURIComponent(email);
-            fieldsFilled = true;
-        }
-    }
-    
-    // If fields were filled, show a welcome message and focus on school search
-    if (fieldsFilled && firstName) {
-        // Add welcome message
-        const infoText = document.querySelector('.info-text');
-        if (infoText) {
-            infoText.innerHTML = `
-                <strong>Welcome back, ${decodeURIComponent(firstName)}!</strong><br>
-                Add more schools to your prayer list below.
-            `;
-            infoText.style.background = '#e6f3ff';
-            infoText.style.borderLeftColor = '#36b7ff';
-        }
-        
-        // Focus on school search after a delay
-        setTimeout(() => {
-            const schoolInput = document.getElementById('school-input');
-            if (schoolInput) {
-                schoolInput.focus();
-            }
-        }, 1000);
-    }
-}
-
-// Load notifications and pre-fill form when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Pre-fill form immediately when DOM is ready
-    prefillFormFromURL();
-});
-
-// Load other features when window fully loads
-window.addEventListener('load', () => {
-    loadPrayerNotifications();
-    // Try pre-filling again in case it didn't work the first time
-    prefillFormFromURL();
-});
+        // Load notifications when page loads
+        window.addEventListener('load', () => {
+            loadPrayerNotifications();
+        });
     </script>
 </body>
 </html>

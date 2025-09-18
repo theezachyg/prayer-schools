@@ -17,7 +17,7 @@
     />
     <meta
       property="og:description"
-      content="Join the movement! Adopt a school to pray for during August 1-21, 2025. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during the 2025-2026 school year. Together, we can make a difference through prayer."
     />
     <meta
       property="og:image"
@@ -38,7 +38,7 @@
     />
     <meta
       property="twitter:description"
-      content="Join the movement! Adopt a school to pray for during August 1-21, 2025. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during the 2025-2026 school year. Together, we can make a difference through prayer."
     />
     <meta
       property="twitter:image"
@@ -95,6 +95,70 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
         z-index: -1;
+      }
+
+      /* Alert Banner Styles */
+      .alert-banner {
+        background: #113a51;
+        color: white;
+        padding: 15px 20px;
+        text-align: center;
+        position: relative;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .alert-banner.hiding {
+        animation: slideUp 0.3s ease-out forwards;
+      }
+
+      @keyframes slideUp {
+        to {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+      }
+
+      .alert-banner-content {
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .alert-banner-icon {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .alert-banner-text {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .alert-banner-text strong {
+        font-weight: bold;
+      }
+
+      @media (max-width: 768px) {
+        .alert-banner {
+          padding: 12px 15px;
+          font-size: 14px;
+        }
+
+        .alert-banner-icon {
+          font-size: 20px;
+        }
       }
 
       .page-wrapper {
@@ -630,6 +694,37 @@
     </style>
   </head>
   <body>
+    <!-- Alert Banner -->
+    <div class="alert-banner" id="alertBanner" style="background: #0a1e2b">
+      <div class="alert-banner-content">
+        <span class="alert-banner-text">
+          <strong style="display: block; margin-bottom: 5px; color: #ec9e23"
+            >Urgent Prayer Request</strong
+          >
+          Please join us in praying for Annunciation Catholic School in
+          Minneapolis, their students, families, faculty and the entire
+          community during this difficult time.
+          <a
+            href="#"
+            onclick="adoptAnnunciationSchool(event)"
+            style="
+              display: inline-block;
+              margin-left: 15px;
+              background: #36b7ff;
+              color: white;
+              padding: 6px 15px;
+              border-radius: 4px;
+              text-decoration: none;
+              font-weight: bold;
+              font-size: 0.9em;
+              white-space: nowrap;
+            "
+            >Adopt This School in Prayer</a
+          >
+        </span>
+      </div>
+    </div>
+
     <div class="page-wrapper">
       <div class="content-wrapper">
         <div class="container">
@@ -654,7 +749,7 @@
               >OF PRAYER FOR SCHOOLS</span
             >
           </h1>
-          <p class="subtitle">August 1-21, 2025</p>
+          <p class="subtitle">2025-2026 School Year</p>
 
           <div class="info-text">
             <strong>Join us in adopting your local schools for prayer.</strong
@@ -855,7 +950,7 @@
                 color: #ec9e23;
               "
             >
-              August 1-21, 2025
+              2025-2026 School Year
             </div>
 
             <div class="share-section">
@@ -932,7 +1027,7 @@
                 >Adopt More Schools</a
               >
               <a
-                href="map.html"
+                href="map-v2.html"
                 class="action-btn"
                 style="
                   width: 100%;
@@ -947,7 +1042,7 @@
 
           <div style="text-align: center; margin-top: 30px">
             <a
-              href="map.html"
+              href="map-v2.html"
               style="
                 display: inline-block;
                 background: #ec9e23;
@@ -1029,6 +1124,54 @@
     </div>
 
     <script>
+      // Function to adopt Annunciation Catholic School
+      function adoptAnnunciationSchool(event) {
+        event.preventDefault();
+
+        // Pre-fill the school with exact Google Maps data
+        const schoolToAdd = {
+          name: "Annunciation Catholic School (Preschool-8th grade)",
+          place_id: "ChIJKSBFc0VihocROgXfYINwvtA",
+          address: "2900 Humboldt Ave N, Minneapolis, MN 55411",
+          formatted_address: "2900 Humboldt Ave N, Minneapolis, MN 55411, USA",
+          isSpecialPrayer: true,
+        };
+
+        // Add to selected schools if not already there
+        if (
+          !selectedSchools.some(
+            (school) => school.place_id === schoolToAdd.place_id,
+          )
+        ) {
+          selectedSchools.push(schoolToAdd);
+          updateSelectedSchoolsDisplay();
+        }
+
+        // Scroll to form
+        document
+          .querySelector(".container")
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Focus on first name field if empty
+        const firstNameField = document.getElementById("firstName");
+        if (firstNameField && !firstNameField.value) {
+          setTimeout(() => {
+            firstNameField.focus();
+          }, 500);
+        }
+
+        // Update info text to acknowledge the special prayer request
+        const infoText = document.querySelector(".info-text");
+        if (infoText) {
+          infoText.innerHTML = `
+			<strong>Thank you for responding to this urgent prayer need.</strong><br>
+			Annunciation Catholic School has been added to your prayer list. Please also consider adding other schools in your community.
+		  `;
+          infoText.style.background = "#f0e5d2";
+          infoText.style.borderLeftColor = "#ec9e23";
+        }
+      }
+
       // Set current year
       document.getElementById("currentYear").textContent =
         new Date().getFullYear();
@@ -1041,7 +1184,7 @@
 
       // Share functions
       function shareOnFacebook() {
-        const url = encodeURIComponent(window.location.origin + "/map.html");
+        const url = encodeURIComponent(window.location.origin + "/map-v2.html");
         const schoolNames = currentUserData.schools
           .map((s) => s.name)
           .join(", ");
@@ -1070,7 +1213,7 @@
       }
 
       function shareOnTwitter() {
-        const url = encodeURIComponent(window.location.origin + "/map.html");
+        const url = encodeURIComponent(window.location.origin + "/map-v2.html");
         const schoolNames = currentUserData.schools
           .map((s) => s.name)
           .join(", ");
@@ -1112,10 +1255,10 @@
         const subject = encodeURIComponent("I'm Praying for Our Schools!");
         const body = encodeURIComponent(
           `Hi,\n\n` +
-            `I wanted to share that I've committed to pray for the following schools during the 21 Days of Prayer for Our Nation's Schools (August 1-21, 2025):\n\n` +
+            `I wanted to share that I've committed to pray for the following schools during the 21 Days of Prayer for Our Nation's Schools:\n\n` +
             `${schoolsList}\n\n` +
             `I encourage you to join this movement and adopt schools in your community for prayer. ` +
-            `You can sign up and see the prayer map here: ${window.location.origin}/map.html\n\n` +
+            `You can sign up and see the prayer map here: ${window.location.origin}/map-v2.html\n\n` +
             `Together, we can make a difference through prayer!\n\n` +
             `Blessings,\n${currentUserData.firstName}`,
         );
@@ -1150,7 +1293,7 @@
         }
 
         const text = encodeURIComponent(
-          `${smsText} Join me: ${window.location.origin}/map.html`,
+          `${smsText} Join me: ${window.location.origin}/map-v2.html`,
         );
 
         // Detect mobile and use appropriate SMS link
@@ -1219,7 +1362,7 @@
           // Show success feedback
           const button = event.target;
           const originalText = button.textContent;
-          button.textContent = "✓ Copied!";
+          button.textContent = "✔ Copied!";
           button.style.background = "#10b981";
 
           setTimeout(() => {
@@ -1254,11 +1397,11 @@
         const container = document.querySelector(".container");
         if (container) {
           container.innerHTML = `
-                    <h1 style="color: #e53e3e;">Configuration Error</h1>
-                    <p style="color: #113a51; text-align: center;">
-                        We're experiencing technical difficulties. Please try again later or contact support.
-                    </p>
-                `;
+					<h1 style="color: #e53e3e;">Configuration Error</h1>
+					<p style="color: #113a51; text-align: center;">
+						We're experiencing technical difficulties. Please try again later or contact support.
+					</p>
+				`;
         }
       }
 
@@ -1625,9 +1768,9 @@
           const tag = document.createElement("div");
           tag.className = "school-tag";
           tag.innerHTML = `
-                    ${school.name}${school.isManual ? " (Manual)" : ""}
-                    <span class="remove" onclick="removeSchool(${index})">&times;</span>
-                `;
+					${school.name}${school.isManual ? " (Manual)" : ""}${school.isSpecialPrayer ? " 🙏" : ""}
+					<span class="remove" onclick="removeSchool(${index})">&times;</span>
+				`;
           container.appendChild(tag);
         });
       }
@@ -1713,7 +1856,11 @@
               schools: selectedSchools.map((school) => ({
                 name: school.name,
                 address: school.address || school.formatted_address || "",
-                type: school.isManual ? "Manual Entry" : "Google Places",
+                type: school.isManual
+                  ? "Manual Entry"
+                  : school.isSpecialPrayer
+                    ? "Special Prayer Request"
+                    : "Google Places",
               })),
             };
 
@@ -1755,7 +1902,7 @@
                     } else {
                       location = school.address;
                     }
-                    return `<div style="margin: 8px 0;"><strong>${school.name} (${location})</strong></div>`;
+                    return `<div style="margin: 8px 0;"><strong>${school.name}${school.isSpecialPrayer ? " 🙏" : ""} (${location})</strong></div>`;
                   })
                   .join("");
 
@@ -1776,14 +1923,14 @@
                 linkSection.style.cssText =
                   "margin: 20px 0; padding: 20px; background: rgba(54, 183, 255, 0.1); border-radius: 8px; border: 1px solid #36b7ff;";
                 linkSection.innerHTML = `
-                        <h3 style="color: #36b7ff; font-size: 1em; margin-bottom: 10px; text-transform: uppercase;">Want to Add More Schools Later?</h3>
-                        <p style="margin-bottom: 10px; font-size: 0.9em;">Save this link to easily add more schools throughout the 21 days:</p>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                            <input type="text" value="${personalLink}" readonly style="flex: 1; min-width: 200px; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid #36b7ff; border-radius: 4px; color: white; font-size: 0.8em;" id="personalLink">
-                            <button onclick="copyPersonalLink()" style="background: #36b7ff; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8em;">Copy Link</button>
-                        </div>
-                        <p style="margin-top: 10px; font-size: 0.85em; color: #d2f8ff;">💡 Tip: Bookmark this link or save it in your notes!</p>
-                    `;
+						<h3 style="color: #36b7ff; font-size: 1em; margin-bottom: 10px; text-transform: uppercase;">Want to Add More Schools Later?</h3>
+						<p style="margin-bottom: 10px; font-size: 0.9em;">Save this link to easily add more schools throughout the 21 days:</p>
+						<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+							<input type="text" value="${personalLink}" readonly style="flex: 1; min-width: 200px; padding: 8px; background: rgba(255, 255, 255, 0.1); border: 1px solid #36b7ff; border-radius: 4px; color: white; font-size: 0.8em;" id="personalLink">
+							<button onclick="copyPersonalLink()" style="background: #36b7ff; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8em;">Copy Link</button>
+						</div>
+						<p style="margin-top: 10px; font-size: 0.85em; color: #d2f8ff;">💡 Tip: Bookmark this link or save it in your notes!</p>
+					`;
 
                 shareSection.parentNode.insertBefore(linkSection, shareSection);
 
@@ -1942,9 +2089,9 @@
           const infoText = document.querySelector(".info-text");
           if (infoText) {
             infoText.innerHTML = `
-                <strong>Welcome back, ${decodeURIComponent(firstName)}!</strong><br>
-                Add more schools to your prayer list below.
-            `;
+				<strong>Welcome back, ${decodeURIComponent(firstName)}!</strong><br>
+				Add more schools to your prayer list below.
+			`;
             infoText.style.background = "#e6f3ff";
             infoText.style.borderLeftColor = "#36b7ff";
           }
