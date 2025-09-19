@@ -3,146 +3,228 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>21 Days of Prayer 2025 - 4K Map Export</title>
+    <title>Media Resources - 21 Days of Prayer for Schools</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://schoolprayer.bridgebuilders.net/media"
+    />
+    <meta
+      property="og:title"
+      content="Media Resources - 21 Days of Prayer for Our Nation's Schools"
+    />
+    <meta
+      property="og:description"
+      content="Access prayer maps, statistics, and media resources for the 21 Days of Prayer movement."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.prod.website-files.com/642ce3ba6c45ae6f28f9515f/689138cffa79673f9034b6aa_21dofprayerschools.png"
+    />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+
     <style>
-      body {
+      * {
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
           sans-serif;
-        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-        overflow: hidden;
+        background: #f8f9fa;
+        color: #113a51;
+        line-height: 1.6;
       }
 
-      #map-container {
-        width: 100vw;
-        height: 100vh;
-        position: relative;
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #113a51 0%, #1e5173 100%);
+        color: white;
+        padding: 2rem 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .logo span:first-child {
+        font-weight: 900;
+      }
+
+      .logo span:last-child {
+        font-weight: 300;
+        opacity: 0.9;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.95;
+      }
+
+      /* Navigation */
+      .nav-bar {
+        background: white;
+        border-bottom: 1px solid #e0e0e0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem;
         display: flex;
+        gap: 2rem;
         align-items: center;
+      }
+
+      .nav-link {
+        color: #113a51;
+        text-decoration: none;
+        padding: 1rem 0;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-link:hover {
+        color: #36b7ff;
+      }
+
+      .nav-link.active {
+        color: #36b7ff;
+        border-bottom: 2px solid #36b7ff;
+      }
+
+      /* Main Content */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+
+      /* Stats Section */
+      .stats-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #36b7ff;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        font-size: 1.1rem;
+        color: #666;
+      }
+
+      .stat-loading {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #36b7ff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      /* Map Section */
+      .map-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        margin-bottom: 3rem;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        color: #113a51;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-description {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      #canvas-container {
+        position: relative;
+        width: 100%;
+        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+        border-radius: 8px;
+        padding: 2rem;
+        display: flex;
         justify-content: center;
+        align-items: center;
+        min-height: 400px;
       }
 
       #canvas {
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        max-width: 100%;
+        height: auto;
         border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        display: none;
       }
 
-      #title {
-        position: absolute;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: white;
-        text-align: center;
-        z-index: 1000;
-        pointer-events: none;
-      }
-
-      #title h1 {
-        margin: 0;
-        font-size: 48px;
-        font-weight: 700;
-        text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        letter-spacing: -1px;
-      }
-
-      #title p {
-        margin: 8px 0 0 0;
-        font-size: 24px;
-        font-weight: 300;
-        opacity: 0.95;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      }
-
-      #stats {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: white;
-        text-align: center;
-        z-index: 1000;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 16px 32px;
-        border-radius: 8px;
-        backdrop-filter: blur(10px);
-        pointer-events: none;
-      }
-
-      #stats span {
-        font-size: 36px;
-        font-weight: 700;
-        color: #ffd700;
-        text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-      }
-
-      .button-container {
-        position: absolute;
-        top: 40px;
-        right: 40px;
-        display: flex;
-        gap: 12px;
-        z-index: 1000;
-      }
-
-      .action-btn {
-        padding: 12px 24px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        transition: all 0.3s ease;
-      }
-
-      .action-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-      }
-
-      .action-btn:disabled {
-        background: #6b7280;
-        cursor: not-allowed;
-        opacity: 0.7;
-      }
-
+      /* Loading State */
       #loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         text-align: center;
-        z-index: 2000;
-        background: rgba(0, 0, 0, 0.8);
-        padding: 40px;
-        border-radius: 12px;
-        backdrop-filter: blur(10px);
-      }
-
-      #loading h2 {
         color: white;
-        margin-bottom: 20px;
-        font-size: 28px;
-      }
-
-      #loading p {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 18px;
-        margin: 10px 0;
       }
 
       .spinner {
         width: 50px;
         height: 50px;
         border: 4px solid rgba(255, 255, 255, 0.2);
-        border-top-color: #667eea;
+        border-top-color: #36b7ff;
         border-radius: 50%;
         animation: spin 1s linear infinite;
         margin: 20px auto;
@@ -154,44 +236,363 @@
         }
       }
 
-      .error {
-        color: #ff6b6b;
-        margin-top: 20px;
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        background: linear-gradient(135deg, #36b7ff 0%, #2a9fdd 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(54, 183, 255, 0.3);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #ec9e23 0%, #d88a1f 100%);
+      }
+
+      .btn-secondary:hover {
+        box-shadow: 0 5px 15px rgba(236, 158, 35, 0.3);
+      }
+
+      .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      /* Info Sections */
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .info-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .info-card h3 {
+        color: #113a51;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+      }
+
+      .info-card p {
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .info-card ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .info-card li {
+        padding: 0.5rem 0;
+        color: #666;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .info-card li:before {
+        content: "✓";
+        color: #36b7ff;
+        font-weight: bold;
+      }
+
+      /* Media Kit Section */
+      .media-kit {
+        background: #113a51;
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .media-kit h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .media-kit p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+      }
+
+      /* Footer */
+      footer {
+        background: #1a1a1a;
+        color: #d2f8ff;
+        padding: 3rem 2rem 2rem;
+        margin-top: 5rem;
+      }
+
+      .footer-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .footer-logo {
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      .footer-logo span:first-child {
+        font-weight: 900;
+      }
+
+      .footer-logo span:last-child {
+        font-weight: 300;
+        opacity: 0.8;
+      }
+
+      footer p {
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      footer a {
+        color: #36b7ff;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .stat-number {
+          font-size: 2.5rem;
+        }
+
+        .nav-content {
+          overflow-x: auto;
+          padding: 0 1rem;
+        }
+
+        .container {
+          padding: 2rem 1rem;
+        }
       }
     </style>
   </head>
   <body>
-    <div id="map-container">
-      <div id="title">
-        <h1>21 DAYS OF PRAYER</h1>
-        <p>FOR OUR NATION'S SCHOOLS</p>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo"><span>BRIDGE</span><span>BUILDERS</span></div>
+        <h1>Media Resources</h1>
+        <p class="subtitle">21 Days of Prayer for Our Nation's Schools</p>
+      </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <div class="nav-content">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="map.html" class="nav-link">Live Map</a>
+        <a href="#" class="nav-link active">Media Resources</a>
+        <a href="homepage.html" class="nav-link">About</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Statistics Section -->
+      <div class="stats-section">
+        <div class="stat-card">
+          <div id="school-count-stat" class="stat-number">
+            <div class="stat-loading"></div>
+          </div>
+          <div class="stat-label">Schools Being Prayed For</div>
+        </div>
+        <div class="stat-card">
+          <div id="people-count-stat" class="stat-number">
+            <div class="stat-loading"></div>
+          </div>
+          <div class="stat-label">Prayer Warriors</div>
+        </div>
+        <div class="stat-card">
+          <div id="states-count-stat" class="stat-number">50</div>
+          <div class="stat-label">States Participating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">Aug 1-21</div>
+          <div class="stat-label">2025 Prayer Dates</div>
+        </div>
       </div>
 
-      <div id="loading">
-        <h2>Loading Prayer Map</h2>
-        <div class="spinner"></div>
-        <p>Fetching school data from Google Sheets...</p>
-        <div class="error"></div>
+      <!-- Information Cards -->
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>About the Movement</h3>
+          <p>
+            The 21 Days of Prayer for Our Nation's Schools is a nationwide
+            initiative mobilizing communities to pray for students, teachers,
+            and administrators during the critical back-to-school season.
+          </p>
+          <p>
+            Since its inception, this movement has united thousands of prayer
+            warriors across America, creating a spiritual covering over our
+            educational institutions.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Key Information</h3>
+          <ul>
+            <li>Annual prayer focus: August 1-21</li>
+            <li>Open to all denominations and communities</li>
+            <li>Each participant "adopts" specific schools</li>
+            <li>Resources provided for effective prayer</li>
+            <li>Real-time tracking of prayer coverage</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3>Media Contact</h3>
+          <p><strong>BridgeBuilders Int'l Leadership Network</strong></p>
+          <p>P.O. Box 31415<br />Phoenix, AZ 85046 USA</p>
+          <p>
+            Email:
+            <a href="mailto:info@bridgebuilders.net">info@bridgebuilders.net</a>
+          </p>
+          <p>
+            Website:
+            <a href="https://prayerforschools.com" target="_blank"
+              >prayerforschools.com</a
+            >
+          </p>
+        </div>
       </div>
 
-      <canvas
-        id="canvas"
-        width="3840"
-        height="2160"
-        style="display: none"
-      ></canvas>
+      <!-- Map Section -->
+      <div class="map-section">
+        <div class="section-header">
+          <h2 class="section-title">Interactive Prayer Map</h2>
+          <p class="section-description">
+            High-resolution visualization of schools being prayed for across the
+            United States. Perfect for presentations, reports, and social media
+            sharing.
+          </p>
+        </div>
 
-      <div id="stats" style="display: none">
-        <span id="school-count">0</span> Schools Adopted
+        <div id="canvas-container">
+          <div id="loading">
+            <div class="spinner"></div>
+            <p>Loading prayer map data...</p>
+          </div>
+          <canvas id="canvas" width="3840" height="2160"></canvas>
+        </div>
+
+        <div class="action-buttons">
+          <button class="btn" onclick="exportMap()" id="export-btn" disabled>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+            </svg>
+            Download 4K Image
+          </button>
+          <button
+            class="btn btn-secondary"
+            onclick="reloadData()"
+            id="refresh-btn"
+            disabled
+          >
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"
+              />
+            </svg>
+            Refresh Data
+          </button>
+          <a href="map.html" class="btn btn-secondary">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+            View Live Map
+          </a>
+        </div>
       </div>
 
-      <div class="button-container" style="display: none">
-        <button class="action-btn" onclick="exportMap()">
-          Export 4K Image
-        </button>
-        <button class="action-btn" onclick="reloadData()">Refresh Data</button>
+      <!-- Media Kit Section -->
+      <div class="media-kit">
+        <h2>Need Additional Resources?</h2>
+        <p>
+          We have prayer guides, promotional materials, and additional resources
+          available for churches, schools, and media organizations.
+        </p>
+        <a
+          href="mailto:info@bridgebuilders.net?subject=Media%20Resources%20Request"
+          class="btn"
+        >
+          Request Media Kit
+        </a>
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <a
+          href="https://bridgebuilders.net"
+          target="_blank"
+          class="footer-logo"
+        >
+          <span>BRIDGE</span><span>BUILDERS</span>
+        </a>
+        <p>P.O. Box 31415, Phoenix, AZ 85046 USA</p>
+        <p>
+          BridgeBuilders Int'l Leadership Network ©
+          <span id="currentYear"></span>. All Rights Reserved.
+        </p>
+        <p style="margin-top: 1rem">
+          <a href="https://bridgebuilders.net" target="_blank"
+            >bridgebuilders.net</a
+          >
+          |
+          <a href="https://prayerforschools.com" target="_blank"
+            >prayerforschools.com</a
+          >
+        </p>
+      </div>
+    </footer>
 
     <!-- Load configuration -->
     <script src="/config.js"></script>
@@ -200,19 +601,12 @@
       // Get config from environment variables
       const config = window.ENV || {};
 
-      // Debug logging
-      console.log("Environment config loaded");
-      console.log("Maps API Key present:", !!config.GOOGLE_MAPS_API_KEY);
-      console.log("Sheet ID present:", !!config.SHEET_ID);
-
       // Check for required configuration
       if (!config.GOOGLE_MAPS_API_KEY || !config.SHEET_ID) {
         console.error("Missing required configuration");
         document.getElementById("loading").innerHTML = `
-				<h2 style="color: #ff6b6b;">Configuration Error</h2>
-				<p style="color: rgba(255,255,255,0.8);">
-					Missing API configuration. Please ensure environment variables are set.
-				</p>
+				<p style="color: #ff6b6b;">Configuration Error</p>
+				<p style="font-size: 14px;">Missing API configuration. Please ensure environment variables are set.</p>
 			`;
       }
 
@@ -228,12 +622,15 @@
       const ctx = canvas.getContext("2d");
 
       // Set canvas display size (scaled for viewport)
-      const scale = Math.min(
-        (window.innerWidth / width) * 0.9,
-        (window.innerHeight / height) * 0.9,
-      );
-      canvas.style.width = width * scale + "px";
-      canvas.style.height = height * scale + "px";
+      function resizeCanvas() {
+        const container = document.getElementById("canvas-container");
+        const maxWidth = container.clientWidth - 64; // Account for padding
+        const scale = Math.min(maxWidth / width, 0.3); // Max 30% of original size
+        canvas.style.width = width * scale + "px";
+        canvas.style.height = height * scale + "px";
+      }
+
+      window.addEventListener("resize", resizeCanvas);
 
       // Map styling
       const bgColor = "#0a0e27";
@@ -254,7 +651,6 @@
         try {
           const response = await fetch(SHEETS_API_URL);
           if (!response.ok) {
-            // If 400 error, might be API key issue
             if (response.status === 400) {
               throw new Error(
                 "Invalid API configuration. Please check API key and Sheet ID.",
@@ -284,13 +680,24 @@
           // Skip header row
           const dataRows = rows.slice(1);
           const schools = [];
+          const uniquePeople = new Set();
+          const uniqueSchools = new Set();
 
-          // Process each row - columns match your existing site
+          // Process each row
           dataRows.forEach((row, index) => {
             const lat = parseFloat(row[7]); // Latitude column H
             const lng = parseFloat(row[8]); // Longitude column I
             const schoolName = row[4]; // School Name
             const schoolAddress = row[5]; // School Address
+            const personEmail = row[3]; // Email for unique person count
+
+            if (personEmail) {
+              uniquePeople.add(personEmail.toLowerCase());
+            }
+
+            if (schoolName && schoolAddress) {
+              uniqueSchools.add(`${schoolName}|${schoolAddress}`);
+            }
 
             if (!isNaN(lat) && !isNaN(lng) && lat && lng) {
               schools.push({
@@ -301,6 +708,12 @@
               });
             }
           });
+
+          // Update statistics
+          document.getElementById("school-count-stat").textContent =
+            uniqueSchools.size.toLocaleString();
+          document.getElementById("people-count-stat").textContent =
+            uniquePeople.size.toLocaleString();
 
           console.log(`Found ${schools.length} schools with valid coordinates`);
 
@@ -348,12 +761,9 @@
           // Hide loading and show canvas
           document.getElementById("loading").style.display = "none";
           canvas.style.display = "block";
-          document.getElementById("stats").style.display = "block";
-          document.querySelector(".button-container").style.display = "flex";
-
-          // Update count
-          document.getElementById("school-count").textContent =
-            usSchools.length.toLocaleString();
+          document.getElementById("export-btn").disabled = false;
+          document.getElementById("refresh-btn").disabled = false;
+          resizeCanvas();
 
           // Setup projection - Albers USA for beautiful US visualization
           const projection = d3
@@ -462,57 +872,57 @@
             year: "numeric",
           });
 
-          // Add semi-transparent background for bottom right corner
+          // Add semi-transparent background for bottom right corner - LARGER
           ctx.fillStyle = "rgba(10, 14, 39, 0.85)";
-          const boxWidth = 450;
-          const boxHeight = 140;
-          const boxX = width - boxWidth - 30;
-          const boxY = height - boxHeight - 30;
+          const boxWidth = 600;
+          const boxHeight = 200;
+          const boxX = width - boxWidth - 40;
+          const boxY = height - boxHeight - 40;
 
           // Rounded rectangle for background
           ctx.beginPath();
-          ctx.moveTo(boxX + 10, boxY);
-          ctx.lineTo(boxX + boxWidth - 10, boxY);
+          ctx.moveTo(boxX + 15, boxY);
+          ctx.lineTo(boxX + boxWidth - 15, boxY);
           ctx.quadraticCurveTo(
             boxX + boxWidth,
             boxY,
             boxX + boxWidth,
-            boxY + 10,
+            boxY + 15,
           );
-          ctx.lineTo(boxX + boxWidth, boxY + boxHeight - 10);
+          ctx.lineTo(boxX + boxWidth, boxY + boxHeight - 15);
           ctx.quadraticCurveTo(
             boxX + boxWidth,
             boxY + boxHeight,
-            boxX + boxWidth - 10,
+            boxX + boxWidth - 15,
             boxY + boxHeight,
           );
-          ctx.lineTo(boxX + 10, boxY + boxHeight);
+          ctx.lineTo(boxX + 15, boxY + boxHeight);
           ctx.quadraticCurveTo(
             boxX,
             boxY + boxHeight,
             boxX,
-            boxY + boxHeight - 10,
+            boxY + boxHeight - 15,
           );
-          ctx.lineTo(boxX, boxY + 10);
-          ctx.quadraticCurveTo(boxX, boxY, boxX + 10, boxY);
+          ctx.lineTo(boxX, boxY + 15);
+          ctx.quadraticCurveTo(boxX, boxY, boxX + 15, boxY);
           ctx.closePath();
           ctx.fill();
 
           // Center position for text in the box
           const centerX = boxX + boxWidth / 2;
 
-          // Add BridgeBuilders branding
+          // Add BridgeBuilders branding - LARGER SIZES
           ctx.textAlign = "center";
           ctx.fillStyle = "white";
 
-          // BridgeBuilders logo text
+          // BridgeBuilders logo text - INCREASED SIZE
           ctx.font =
-            '900 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '900 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           const bridgeText = "BRIDGE";
           const bridgeWidth = ctx.measureText(bridgeText).width;
 
           ctx.font =
-            '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '300 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           const buildersText = "BUILDERS";
           const buildersWidth = ctx.measureText(buildersText).width;
 
@@ -521,37 +931,37 @@
 
           // Draw BRIDGE in bold
           ctx.font =
-            '900 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          ctx.fillText(bridgeText, startX + bridgeWidth / 2, boxY + 35);
+            '900 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillText(bridgeText, startX + bridgeWidth / 2, boxY + 50);
 
           // Draw BUILDERS in light
           ctx.font =
-            '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '300 48px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
           ctx.fillText(
             buildersText,
             startX + bridgeWidth + buildersWidth / 2,
-            boxY + 35,
+            boxY + 50,
           );
 
-          // Add "Int'l Leadership Network"
+          // Add "Int'l Leadership Network" - LARGER
           ctx.font =
-            '18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '26px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
           ctx.textAlign = "center";
-          ctx.fillText("Int'l Leadership Network", centerX, boxY + 60);
+          ctx.fillText("Int'l Leadership Network", centerX, boxY + 90);
 
-          // Add website URL
+          // Add website URL - LARGER
           ctx.font =
-            'italic 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            'italic 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           ctx.fillStyle = "#FFD700"; // Golden color for URL
-          ctx.fillText("prayerforschools.com", centerX, boxY + 90);
+          ctx.fillText("prayerforschools.com", centerX, boxY + 135);
 
-          // Add generated date
+          // Add generated date - LARGER
           ctx.font =
-            '16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-          ctx.fillText(`Generated: ${dateStr}`, centerX, boxY + 115);
+          ctx.fillText(`Generated: ${dateStr}`, centerX, boxY + 170);
 
           console.log("Map rendered successfully!");
         } catch (error) {
@@ -562,17 +972,17 @@
 
       function showError(message) {
         const loadingEl = document.getElementById("loading");
-        loadingEl.querySelector(".spinner").style.display = "none";
-        loadingEl.querySelector("p").style.display = "none";
-        const errorEl = loadingEl.querySelector(".error");
-        errorEl.textContent = message;
-        errorEl.style.display = "block";
+        loadingEl.innerHTML = `
+				<p style="color: #ff6b6b; font-size: 1.2rem;">Error</p>
+				<p style="font-size: 1rem; margin-top: 1rem;">${message}</p>
+			`;
       }
 
       function exportMap() {
-        const exportBtn = event.target;
+        const exportBtn = document.getElementById("export-btn");
         exportBtn.disabled = true;
-        exportBtn.textContent = "Generating...";
+        exportBtn.innerHTML =
+          '<span class="stat-loading" style="width: 20px; height: 20px; border-width: 2px;"></span> Generating...';
 
         canvas.toBlob(
           (blob) => {
@@ -585,7 +995,12 @@
             URL.revokeObjectURL(url);
 
             exportBtn.disabled = false;
-            exportBtn.textContent = "Export 4K Image";
+            exportBtn.innerHTML = `
+					<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+					</svg>
+					Download 4K Image
+				`;
           },
           "image/png",
           1.0,
@@ -594,22 +1009,20 @@
 
       function reloadData() {
         document.getElementById("loading").style.display = "block";
-        document
-          .getElementById("loading")
-          .querySelector(".spinner").style.display = "block";
-        document.getElementById("loading").querySelector("p").style.display =
-          "block";
-        document.getElementById("loading").querySelector("p").textContent =
-          "Refreshing data...";
-        document
-          .getElementById("loading")
-          .querySelector(".error").style.display = "none";
+        document.getElementById("loading").innerHTML = `
+				<div class="spinner"></div>
+				<p>Refreshing data...</p>
+			`;
         canvas.style.display = "none";
-        document.getElementById("stats").style.display = "none";
-        document.querySelector(".button-container").style.display = "none";
+        document.getElementById("export-btn").disabled = true;
+        document.getElementById("refresh-btn").disabled = true;
 
         loadSchoolData();
       }
+
+      // Set current year in footer
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
 
       // Initialize on page load
       window.addEventListener("load", () => {
