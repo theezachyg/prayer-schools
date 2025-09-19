@@ -454,7 +454,7 @@
           ctx.lineWidth = 4;
           ctx.strokeRect(2, 2, width - 4, height - 4);
 
-          // Add branding and footer information
+          // Add branding and footer information in bottom right
           const now = new Date();
           const dateStr = now.toLocaleDateString("en-US", {
             month: "long",
@@ -462,62 +462,96 @@
             year: "numeric",
           });
 
-          // Add semi-transparent background for footer
-          ctx.fillStyle = "rgba(10, 14, 39, 0.8)";
-          ctx.fillRect(0, height - 120, width, 120);
+          // Add semi-transparent background for bottom right corner
+          ctx.fillStyle = "rgba(10, 14, 39, 0.85)";
+          const boxWidth = 450;
+          const boxHeight = 140;
+          const boxX = width - boxWidth - 30;
+          const boxY = height - boxHeight - 30;
+
+          // Rounded rectangle for background
+          ctx.beginPath();
+          ctx.moveTo(boxX + 10, boxY);
+          ctx.lineTo(boxX + boxWidth - 10, boxY);
+          ctx.quadraticCurveTo(
+            boxX + boxWidth,
+            boxY,
+            boxX + boxWidth,
+            boxY + 10,
+          );
+          ctx.lineTo(boxX + boxWidth, boxY + boxHeight - 10);
+          ctx.quadraticCurveTo(
+            boxX + boxWidth,
+            boxY + boxHeight,
+            boxX + boxWidth - 10,
+            boxY + boxHeight,
+          );
+          ctx.lineTo(boxX + 10, boxY + boxHeight);
+          ctx.quadraticCurveTo(
+            boxX,
+            boxY + boxHeight,
+            boxX,
+            boxY + boxHeight - 10,
+          );
+          ctx.lineTo(boxX, boxY + 10);
+          ctx.quadraticCurveTo(boxX, boxY, boxX + 10, boxY);
+          ctx.closePath();
+          ctx.fill();
+
+          // Center position for text in the box
+          const centerX = boxX + boxWidth / 2;
 
           // Add BridgeBuilders branding
           ctx.textAlign = "center";
           ctx.fillStyle = "white";
 
-          // BridgeBuilders logo text - centered
+          // BridgeBuilders logo text
           ctx.font =
-            'bold 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '900 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           const bridgeText = "BRIDGE";
           const bridgeWidth = ctx.measureText(bridgeText).width;
 
           ctx.font =
-            '300 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+            '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           const buildersText = "BUILDERS";
           const buildersWidth = ctx.measureText(buildersText).width;
 
           const totalWidth = bridgeWidth + buildersWidth;
-          const startX = (width - totalWidth) / 2;
+          const startX = centerX - totalWidth / 2;
 
           // Draw BRIDGE in bold
           ctx.font =
-            '900 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          ctx.fillText(bridgeText, startX + bridgeWidth / 2, height - 70);
+            '900 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillText(bridgeText, startX + bridgeWidth / 2, boxY + 35);
 
           // Draw BUILDERS in light
           ctx.font =
-            '300 36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+            '300 32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
           ctx.fillText(
             buildersText,
             startX + bridgeWidth + buildersWidth / 2,
-            height - 70,
+            boxY + 35,
           );
 
           // Add "Int'l Leadership Network"
           ctx.font =
-            '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            '18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
           ctx.textAlign = "center";
-          ctx.fillText("Int'l Leadership Network", width / 2, height - 40);
+          ctx.fillText("Int'l Leadership Network", centerX, boxY + 60);
 
           // Add website URL
           ctx.font =
-            'italic 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-          ctx.fillStyle = "rgba(255, 215, 0, 0.9)"; // Golden color for URL
-          ctx.fillText("prayerforschools.com", width / 2, height - 15);
+            'italic 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.fillStyle = "#FFD700"; // Golden color for URL
+          ctx.fillText("prayerforschools.com", centerX, boxY + 90);
 
-          // Add generated date in the top right corner
-          ctx.textAlign = "right";
+          // Add generated date
           ctx.font =
             '16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
           ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-          ctx.fillText(`Generated: ${dateStr}`, width - 40, 80);
+          ctx.fillText(`Generated: ${dateStr}`, centerX, boxY + 115);
 
           console.log("Map rendered successfully!");
         } catch (error) {
