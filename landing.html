@@ -586,7 +586,7 @@
         line-height: 1.4;
       }
 
-      /* CTA Section */
+      /* CTA Section - FIXED VERSION */
       .cta-section {
         background: linear-gradient(135deg, var(--primary-blue), #1e5173);
         color: white;
@@ -611,6 +611,8 @@
           transparent 70%
         );
         animation: pulse 15s ease-in-out infinite;
+        pointer-events: none; /* CRITICAL FIX: This makes the overlay non-interactive */
+        z-index: 0; /* Ensure it's behind content */
       }
 
       @keyframes pulse {
@@ -631,6 +633,7 @@
         position: relative;
         font-family: "Playfair Display", serif;
         font-size: 2.5rem;
+        z-index: 1; /* Ensure it's above the overlay */
       }
 
       .cta-section p {
@@ -641,11 +644,21 @@
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
+        z-index: 1; /* Ensure it's above the overlay */
       }
 
       .cta-section .btn {
         background: white;
         color: var(--primary-blue);
+        position: relative; /* CRITICAL FIX: Position relative for z-index */
+        z-index: 2; /* CRITICAL FIX: Ensure button is above everything */
+        cursor: pointer; /* Ensure pointer cursor */
+        display: inline-block; /* Ensure proper display */
+      }
+
+      .cta-section .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       }
 
       /* Footer */
@@ -939,7 +952,7 @@
         </div>
       </section>
 
-      <!-- CTA Section -->
+      <!-- CTA Section - FIXED -->
       <section class="cta-section">
         <h2>Every School Covered in Prayer</h2>
         <p>
