@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>21 Days of Prayer for Schools - Registration</title>
+    <script src="/academic-year.js"></script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -17,7 +18,9 @@
     />
     <meta
       property="og:description"
-      content="Join the movement! Adopt a school to pray for during the 2025-2026 school year. Together, we can make a difference through prayer."
+      data-year-attr="content"
+      data-year-tpl="Join the movement! Adopt a school to pray for during the {{ACADEMIC_YEAR}} school year. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during the 2026-2027 school year. Together, we can make a difference through prayer."
     />
     <meta
       property="og:image"
@@ -38,7 +41,9 @@
     />
     <meta
       property="twitter:description"
-      content="Join the movement! Adopt a school to pray for during the 2025-2026 school year. Together, we can make a difference through prayer."
+      data-year-attr="content"
+      data-year-tpl="Join the movement! Adopt a school to pray for during the {{ACADEMIC_YEAR}} school year. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during the 2026-2027 school year. Together, we can make a difference through prayer."
     />
     <meta
       property="twitter:image"
@@ -654,7 +659,7 @@
               >OF PRAYER FOR SCHOOLS</span
             >
           </h1>
-          <p class="subtitle">2025-2026 School Year</p>
+          <p class="subtitle" data-year-tpl="{{ACADEMIC_YEAR}} School Year">2026-2027 School Year</p>
 
           <div class="info-text">
             <strong>Join us in adopting your local schools for prayer.</strong
@@ -854,8 +859,9 @@
                 margin: 20px 0;
                 color: #ec9e23;
               "
+              data-year-tpl="{{ACADEMIC_YEAR}} School Year"
             >
-              2025-2026 School Year
+              2026-2027 School Year
             </div>
 
             <div class="share-section">
@@ -932,7 +938,7 @@
                 >Adopt More Schools</a
               >
               <a
-                href="map-v2.html"
+                href="map.html"
                 class="action-btn"
                 style="
                   width: 100%;
@@ -947,7 +953,7 @@
 
           <div style="text-align: center; margin-top: 30px">
             <a
-              href="map-v2.html"
+              href="map.html"
               style="
                 display: inline-block;
                 background: #ec9e23;
@@ -1041,7 +1047,7 @@
 
       // Share functions
       function shareOnFacebook() {
-        const url = encodeURIComponent(window.location.origin + "/map-v2.html");
+        const url = encodeURIComponent(window.location.origin + "/map.html");
         const schoolNames = currentUserData.schools
           .map((s) => s.name)
           .join(", ");
@@ -1070,7 +1076,7 @@
       }
 
       function shareOnTwitter() {
-        const url = encodeURIComponent(window.location.origin + "/map-v2.html");
+        const url = encodeURIComponent(window.location.origin + "/map.html");
         const schoolNames = currentUserData.schools
           .map((s) => s.name)
           .join(", ");
@@ -1115,7 +1121,7 @@
             `I wanted to share that I've committed to pray for the following schools during the 21 Days of Prayer for Our Nation's Schools:\n\n` +
             `${schoolsList}\n\n` +
             `I encourage you to join this movement and adopt schools in your community for prayer. ` +
-            `You can sign up and see the prayer map here: ${window.location.origin}/map-v2.html\n\n` +
+            `You can sign up and see the prayer map here: ${window.location.origin}/map.html\n\n` +
             `Together, we can make a difference through prayer!\n\n` +
             `Blessings,\n${currentUserData.firstName}`,
         );
@@ -1150,7 +1156,7 @@
         }
 
         const text = encodeURIComponent(
-          `${smsText} Join me: ${window.location.origin}/map-v2.html`,
+          `${smsText} Join me: ${window.location.origin}/map.html`,
         );
 
         // Detect mobile and use appropriate SMS link

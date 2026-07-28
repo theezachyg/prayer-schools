@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>21 Days of Prayer for Schools - Registration</title>
+    <script src="/academic-year.js"></script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -17,7 +18,9 @@
     />
     <meta
       property="og:description"
-      content="Join the movement! Adopt a school to pray for during August 1-21, 2025. Together, we can make a difference through prayer."
+      data-year-attr="content"
+      data-year-tpl="Join the movement! Adopt a school to pray for during {{EVENT_DATES}}. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during August 1-21, 2026. Together, we can make a difference through prayer."
     />
     <meta
       property="og:image"
@@ -38,7 +41,9 @@
     />
     <meta
       property="twitter:description"
-      content="Join the movement! Adopt a school to pray for during August 1-21, 2025. Together, we can make a difference through prayer."
+      data-year-attr="content"
+      data-year-tpl="Join the movement! Adopt a school to pray for during {{EVENT_DATES}}. Together, we can make a difference through prayer."
+      content="Join the movement! Adopt a school to pray for during August 1-21, 2026. Together, we can make a difference through prayer."
     />
     <meta
       property="twitter:image"
@@ -654,7 +659,7 @@
               >OF PRAYER FOR SCHOOLS</span
             >
           </h1>
-          <p class="subtitle">August 1-21, 2025</p>
+          <p class="subtitle" data-year-tpl="{{EVENT_DATES}}">August 1-21, 2026</p>
 
           <div class="info-text">
             <strong>Join us in adopting your local schools for prayer.</strong
@@ -854,8 +859,9 @@
                 margin: 20px 0;
                 color: #ec9e23;
               "
+              data-year-tpl="{{EVENT_DATES}}"
             >
-              August 1-21, 2025
+              August 1-21, 2026
             </div>
 
             <div class="share-section">
@@ -1112,7 +1118,7 @@
         const subject = encodeURIComponent("I'm Praying for Our Schools!");
         const body = encodeURIComponent(
           `Hi,\n\n` +
-            `I wanted to share that I've committed to pray for the following schools during the 21 Days of Prayer for Our Nation's Schools (August 1-21, 2025):\n\n` +
+            `I wanted to share that I've committed to pray for the following schools during the 21 Days of Prayer for Our Nation's Schools (${(window.PRAYER_YEAR && window.PRAYER_YEAR.EVENT_DATES) || "August 1-21, 2026"}):\n\n` +
             `${schoolsList}\n\n` +
             `I encourage you to join this movement and adopt schools in your community for prayer. ` +
             `You can sign up and see the prayer map here: ${window.location.origin}/map.html\n\n` +
