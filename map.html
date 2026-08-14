@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#113a51" />
     <title>Prayer Map - 21 Days of Prayer for Schools</title>
 
     <!-- Open Graph / Facebook -->
@@ -1376,7 +1381,7 @@
     <!-- Prayer notification widget -->
     <div class="prayer-notification" id="prayerNotification">
       <div class="prayer-notification-content">
-        <span class="prayer-notification-icon">🙏</span>
+        <span class="prayer-notification-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align:-0.15em;margin-right:0.1em"><path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 16 4a2.7 2.7 0 0 0-5 1.8c0 1.1.8 2 1.5 2.7L16 12Z"/></svg></span>
         <span id="prayerNotificationText"></span>
       </div>
     </div>
@@ -1518,7 +1523,7 @@
         html += '<div class="modal-search search-wrapper">';
         html +=
           '<input type="text" placeholder="Search schools..." onkeyup="filterSchoolsList(this.value)">';
-        html += '<span class="search-icon">🔍</span>';
+        html += '<span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>';
         html += "</div>";
         html += '<label class="my-schools-toggle">';
         html +=
