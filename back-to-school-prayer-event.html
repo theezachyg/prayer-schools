@@ -227,6 +227,25 @@
         transform: translateX(4px);
       }
 
+      /* Nav submenu */
+      .nav-menu .nav-submenu {
+        list-style: none;
+        padding: 0 0 0 0.75rem;
+        margin: 0.25rem 0 0.5rem;
+        border-left: 2px solid rgba(17, 58, 81, 0.1);
+      }
+
+      .nav-menu .nav-submenu li {
+        margin: 0.125rem 0;
+      }
+
+      .nav-menu .nav-submenu a {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--text-medium);
+        padding: 0.5rem 0.75rem;
+      }
+
       .nav-menu a.active-page {
         background: linear-gradient(
           135deg,
@@ -634,6 +653,39 @@
         margin-bottom: 0;
       }
 
+      /* Tell Us Action */
+      .tell-us-action {
+        background: linear-gradient(
+          135deg,
+          rgba(54, 183, 255, 0.06),
+          rgba(54, 183, 255, 0.02)
+        );
+        border: 1px solid rgba(54, 183, 255, 0.2);
+        border-radius: 12px;
+        padding: 1.75rem;
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      /* .content-section a would otherwise repaint this button's label blue */
+      .tell-us-action .btn {
+        font-size: 0.9375rem;
+        padding: 0.75rem 1.5rem;
+        color: white;
+        border-bottom: none;
+      }
+
+      .tell-us-action .btn:hover {
+        color: white;
+        border-bottom: none;
+      }
+
+      .tell-us-note {
+        margin: 1rem 0 0 0;
+        font-size: 0.875rem;
+        color: var(--text-light);
+      }
+
       /* CTA Section */
       .cta-section {
         background: linear-gradient(135deg, var(--primary-blue), #1e5173);
@@ -1029,19 +1081,40 @@
           <li><a href="homepage.html">Home</a></li>
           <li><a href="registration.html">Register &amp; Adopt</a></li>
           <li><a href="map.html">Prayer Map</a></li>
-          <li><a href="prayer-walking-tips.html">Prayer Walking Tips</a></li>
-          <li><a href="canopy-of-protection.html">Canopy of Protection</a></li>
           <li>
-            <a href="battleground-schools.html">Battleground for Schools</a>
-          </li>
-          <li>
-            <a href="university-prayer-guide.html">University Prayer Guide</a>
-          </li>
-          <li><a href="student-prayer-guide.html">Student Prayer Guide</a></li>
-          <li>
-            <a href="back-to-school-prayer-event.html" class="active-page"
-              >Back-to-School Prayer Event</a
-            >
+            <a href="resources.html">Resources</a>
+            <ul class="nav-submenu">
+              <li>
+                <a href="prayer-walking-tips.html"
+                  >Prayer Walking Tips</a
+                >
+              </li>
+              <li>
+                <a href="canopy-of-protection.html"
+                  >Canopy of Protection</a
+                >
+              </li>
+              <li>
+                <a href="battleground-schools.html"
+                  >Battleground for Schools</a
+                >
+              </li>
+              <li>
+                <a href="university-prayer-guide.html"
+                  >University Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="student-prayer-guide.html"
+                  >Student Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="back-to-school-prayer-event.html" class="active-page"
+                  >Back-to-School Prayer Event</a
+                >
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -1053,7 +1126,7 @@
         <div class="breadcrumb">
           <a href="homepage.html">Home</a>
           <span>/</span>
-          <a href="homepage.html#resources">Resources</a>
+          <a href="resources.html">Resources</a>
           <span>/</span>
           <span>Back-to-School Prayer Event</span>
         </div>
@@ -1124,6 +1197,9 @@
               >A Simple Back-to-School Prayer Format</a
             >
           </li>
+          <li>
+            <a href="#tell-us" class="toc-link">Tell Us You Hosted One</a>
+          </li>
         </ul>
       </aside>
 
@@ -1133,9 +1209,9 @@
         <div id="story" class="content-section">
           <h2>A Night at City Life Church</h2>
           <p>
-            Recently, Nicole Reginelli, Prayer Director at City Life Church in
-            San Francisco, called to tell us about the Back-to-School Prayer
-            Night she had just hosted at her church.
+            Nicole Reginelli, Prayer Director at City Life Church in San
+            Francisco, recently shared what happened at the Back-to-School
+            Prayer Night her church hosted.
           </p>
 
           <div class="quote-box">
@@ -1147,7 +1223,7 @@
             </p>
           </div>
 
-          <p>As Nicole began describing what happened, I could understand why.</p>
+          <p>The details of that evening show why.</p>
 
           <p>
             First, the junior high and high school students were called forward,
@@ -1204,7 +1280,7 @@
             mission field God had called them into.
           </p>
 
-          <p>That is what I love about what happened at City Life.</p>
+          <p>That is what stands out about what happened at City Life.</p>
 
           <div class="highlight-box">
             <p>
@@ -1333,7 +1409,7 @@
               </p>
               <p>
                 There they can access
-                <a href="homepage.html#resources">free prayer guides</a> and
+                <a href="resources.html">free prayer guides</a> and
                 resources, find practical help for praying for schools, and
                 <a href="registration.html">adopt a school in prayer</a>—committing
                 to personally cover that campus. They can also see the
@@ -1347,6 +1423,63 @@
                 school year.
               </p>
             </div>
+          </div>
+        </div>
+
+        <!-- Tell Us Section -->
+        <div id="tell-us" class="content-section">
+          <h2>Tell Us You Hosted One</h2>
+          <p>
+            If your church holds a Back-to-School Prayer gathering, let us know.
+            Hearing what happened helps us encourage other churches to do the
+            same—and lets us pray for the students, teachers, and schools your
+            church is covering.
+          </p>
+
+          <h3>What to Include</h3>
+          <ul>
+            <li><strong>Your church name</strong> and city and state</li>
+            <li><strong>The date</strong> you held your gathering</li>
+            <li>
+              <strong>Which format you used</strong>—a full prayer night, a
+              portion of a Sunday service, a youth gathering, or something you
+              adapted on your own
+            </li>
+            <li><strong>About how many people</strong> took part</li>
+            <li>
+              <strong>What stood out</strong>—a moment, a story, or something
+              you would tell another church considering this
+            </li>
+            <li>
+              <strong>Photos,</strong> if you have them and have permission to
+              share them
+            </li>
+          </ul>
+
+          <div class="tell-us-action">
+            <a
+              class="btn btn-primary"
+              href="mailto:info@bridgebuilders.net?subject=We%20Hosted%20a%20Back-to-School%20Prayer%20Gathering&body=Church%20name%3A%20%0ACity%20and%20state%3A%20%0ADate%20we%20hosted%3A%20%0AFormat%20we%20used%3A%20%0AApproximate%20attendance%3A%20%0A%0AWhat%20stood%20out%3A%20%0A%0A%0A(Please%20attach%20any%20photos%20you%20have%20permission%20to%20share.)%0A"
+            >
+              <svg
+                width="16"
+                height="16"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                />
+              </svg>
+              Email Your Report
+            </a>
+            <p class="tell-us-note">
+              Opens your email app with the prompts already filled in. Prefer to
+              write it yourself? Send it to
+              <a href="mailto:info@bridgebuilders.net"
+                >info@bridgebuilders.net</a
+              >.
+            </p>
           </div>
         </div>
 

@@ -1,0 +1,1241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#113a51" />
+    <title>Prayer Resources - 21 Days of Prayer for Schools</title>
+    <script src="/academic-year.js"></script>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://prayerforschools.com/resources.html"
+    />
+    <meta
+      property="og:title"
+      content="Prayer Resources - 21 Days of Prayer for Schools"
+    />
+    <meta
+      property="og:description"
+      content="Free prayer guides, practical tools, and resources for praying over your local schools. Read online or download the PDF."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.prod.website-files.com/642ce3ba6c45ae6f28f9515f/689138cffa79673f9034b6aa_21dofprayerschools.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Prayer Resources - 21 Days of Prayer for Schools"
+    />
+    <meta
+      property="twitter:description"
+      content="Free prayer guides, practical tools, and resources for praying over your local schools."
+    />
+    <meta
+      property="twitter:image"
+      content="https://cdn.prod.website-files.com/642ce3ba6c45ae6f28f9515f/689138cffa79673f9034b6aa_21dofprayerschools.png"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0SBB5GCNJN"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-0SBB5GCNJN");
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-blue: #113a51;
+        --accent-blue: #36b7ff;
+        --success-green: #4caf50;
+        --danger-red: #ef4444;
+        --text-dark: #1f2937;
+        --text-medium: #4b5563;
+        --text-light: #6b7280;
+        --bg-light: #f9fafb;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: linear-gradient(to bottom, #f0f9ff, #ffffff);
+        color: var(--text-dark);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      /* Header Navigation */
+      .header {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: var(--shadow-sm);
+        border-bottom: 1px solid rgba(17, 58, 81, 0.08);
+      }
+
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+      }
+
+      .logo {
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-blue),
+          var(--primary-blue)
+        );
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      .logo span.light {
+        font-weight: 400;
+        color: var(--text-medium);
+      }
+
+      /* Hamburger Menu */
+      .hamburger {
+        display: block;
+        cursor: pointer;
+        z-index: 1100;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      .hamburger:hover {
+        background: var(--bg-light);
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--primary-blue);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+
+      /* Mobile Navigation Menu */
+      .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: 65px;
+        width: 100%;
+        max-width: 360px;
+        height: calc(100vh - 65px);
+        background: white;
+        transition: all 0.3s ease;
+        overflow-y: auto;
+        box-shadow: var(--shadow-xl);
+        border-left: 1px solid rgba(17, 58, 81, 0.08);
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .nav-menu ul {
+        list-style: none;
+        padding: 1.5rem;
+      }
+
+      .nav-menu li {
+        margin: 0.5rem 0;
+      }
+
+      .nav-menu a {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: block;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-menu a:hover {
+        background: var(--bg-light);
+        color: var(--accent-blue);
+        transform: translateX(4px);
+      }
+
+      /* Nav submenu */
+      .nav-menu .nav-submenu {
+        list-style: none;
+        padding: 0 0 0 0.75rem;
+        margin: 0.25rem 0 0.5rem;
+        border-left: 2px solid rgba(17, 58, 81, 0.1);
+      }
+
+      .nav-menu .nav-submenu li {
+        margin: 0.125rem 0;
+      }
+
+      .nav-menu .nav-submenu a {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--text-medium);
+        padding: 0.5rem 0.75rem;
+      }
+
+      .nav-menu a.active-page {
+        background: linear-gradient(
+          135deg,
+          rgba(54, 183, 255, 0.1),
+          rgba(17, 58, 81, 0.05)
+        );
+        color: var(--accent-blue);
+        font-weight: 600;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        margin-top: 65px;
+        background: linear-gradient(
+          135deg,
+          var(--primary-blue) 0%,
+          #1e5173 100%
+        );
+        color: white;
+        padding: 5rem 1.5rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("https://images.squarespace-cdn.com/content/v1/62f1b617cf9c26364ad90dbc/e389cb7c-2cad-45bc-a730-9005a075f5c3/AdobeStock_374844970.jpeg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        z-index: 0;
+      }
+
+      .hero-content {
+        max-width: 1024px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        font-size: 0.875rem;
+        opacity: 0.9;
+      }
+
+      .breadcrumb a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+
+      .breadcrumb a:hover {
+        opacity: 0.7;
+      }
+
+      .hero-content h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-content .subtitle {
+        font-size: 1.25rem;
+        font-weight: 300;
+        opacity: 0.95;
+        line-height: 1.6;
+        max-width: 700px;
+      }
+
+      /* Page Layout */
+      .page-wrapper {
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+      }
+
+      .section-header {
+        max-width: 720px;
+        margin-bottom: 2.5rem;
+      }
+
+      .section-header h2 {
+        font-family: "Playfair Display", serif;
+        color: var(--primary-blue);
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        position: relative;
+        padding-bottom: 1rem;
+      }
+
+      .section-header h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-blue), transparent);
+        border-radius: 2px;
+      }
+
+      .section-header p {
+        color: var(--text-medium);
+        font-size: 1.0625rem;
+        line-height: 1.7;
+      }
+
+      /* Resource Cards */
+      .resource-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.75rem;
+        margin-bottom: 5rem;
+      }
+
+      .resource-item {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid rgba(17, 58, 81, 0.07);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .resource-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .resource-visual {
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          var(--tone-a, #36b7ff),
+          var(--tone-b, #113a51)
+        );
+      }
+
+      .resource-visual::after {
+        content: "";
+        position: absolute;
+        top: -40%;
+        right: -25%;
+        width: 90%;
+        height: 180%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.22) 0%,
+          transparent 65%
+        );
+      }
+
+      .resource-visual svg {
+        width: 52px;
+        height: 52px;
+        color: white;
+        position: relative;
+        z-index: 1;
+        opacity: 0.95;
+      }
+
+      .resource-body {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .resource-body h3 {
+        color: var(--primary-blue);
+        font-size: 1.1875rem;
+        font-weight: 700;
+        margin-bottom: 0.625rem;
+        line-height: 1.35;
+      }
+
+      .resource-body p {
+        color: var(--text-medium);
+        font-size: 0.9375rem;
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+        flex: 1;
+      }
+
+      .resource-actions {
+        display: flex;
+        gap: 0.625rem;
+        flex-wrap: wrap;
+      }
+
+      /* Buttons */
+      .btn {
+        padding: 0.5625rem 1.125rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4375rem;
+        transition: all 0.2s ease;
+        box-shadow: var(--shadow-sm);
+        white-space: nowrap;
+      }
+
+      .btn svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent-blue), #2a90cc);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .btn-secondary {
+        background: white;
+        color: var(--text-dark);
+        border: 1px solid rgba(17, 58, 81, 0.14);
+      }
+
+      .btn-secondary:hover {
+        background: var(--bg-light);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Book Feature */
+      .book-feature {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid rgba(17, 58, 81, 0.07);
+        box-shadow: var(--shadow-sm);
+        padding: 2.5rem;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 2.5rem;
+        align-items: center;
+        margin-bottom: 5rem;
+      }
+
+      .book-feature img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .book-feature h3 {
+        font-family: "Playfair Display", serif;
+        color: var(--primary-blue);
+        font-size: 1.75rem;
+        margin-bottom: 0.875rem;
+      }
+
+      .book-feature p {
+        color: var(--text-medium);
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .book-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      /* CTA Section */
+      .cta-section {
+        background: linear-gradient(135deg, var(--primary-blue), #1e5173);
+        color: white;
+        border-radius: 16px;
+        padding: 3.5rem 3rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 15s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.3;
+        }
+      }
+
+      .cta-section h2 {
+        font-family: "Playfair Display", serif;
+        color: white;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        position: relative;
+      }
+
+      .cta-section p {
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1.125rem;
+        margin: 0 auto 2rem;
+        max-width: 620px;
+        position: relative;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 0.875rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: relative;
+      }
+
+      .cta-section .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9375rem;
+      }
+
+      /* Footer */
+      footer {
+        background: #1a1a1a;
+        color: #d2f8ff;
+        padding: 3rem 1.5rem 2rem;
+        margin-top: 6rem;
+      }
+
+      .footer-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .footer-logo {
+        color: white;
+        text-decoration: none;
+        font-size: 1.125rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        display: inline-block;
+        margin-bottom: 1rem;
+      }
+
+      .footer-logo span {
+        font-weight: 300;
+        opacity: 0.8;
+      }
+
+      footer p {
+        margin: 0.5rem 0;
+        font-size: 0.875rem;
+        opacity: 0.8;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+
+        .hero-content .subtitle {
+          font-size: 1.0625rem;
+        }
+
+        .page-wrapper {
+          margin: 2.5rem auto;
+        }
+
+        .resource-list {
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+
+        .book-feature {
+          grid-template-columns: 1fr;
+          padding: 1.75rem;
+          gap: 1.5rem;
+          text-align: center;
+        }
+
+        .book-feature img {
+          max-width: 180px;
+          margin: 0 auto;
+        }
+
+        .book-actions,
+        .cta-buttons {
+          justify-content: center;
+        }
+
+        .cta-section {
+          padding: 2.5rem 1.5rem;
+        }
+
+        .cta-section h2 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="header">
+      <div class="nav-container">
+        <a href="homepage.html" class="logo">
+          <div class="logo-icon">21</div>
+          <span>DAYS OF PRAYER</span>
+        </a>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="registration.html">Register &amp; Adopt</a></li>
+          <li><a href="map.html">Prayer Map</a></li>
+          <li>
+            <a href="resources.html" class="active-page">Resources</a>
+            <ul class="nav-submenu">
+              <li>
+                <a href="prayer-walking-tips.html">Prayer Walking Tips</a>
+              </li>
+              <li>
+                <a href="canopy-of-protection.html">Canopy of Protection</a>
+              </li>
+              <li>
+                <a href="battleground-schools.html">Battleground for Schools</a>
+              </li>
+              <li>
+                <a href="university-prayer-guide.html"
+                  >University Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="student-prayer-guide.html">Student Prayer Guide</a>
+              </li>
+              <li>
+                <a href="back-to-school-prayer-event.html"
+                  >Back-to-School Prayer Event</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <div class="breadcrumb">
+          <a href="homepage.html">Home</a>
+          <span>/</span>
+          <span>Resources</span>
+        </div>
+        <h1>Prayer Resources</h1>
+        <p class="subtitle">
+          Free guides, practical tools, and everything you need to pray with
+          confidence over the schools in your community. Read any of them online
+          or download the PDF to print and share.
+        </p>
+      </div>
+    </section>
+
+    <div class="page-wrapper">
+      <!-- Prayer Guides -->
+      <div class="section-header">
+        <h2>Prayer Guides</h2>
+        <p>
+          Each guide stands on its own. Start wherever your heart is drawn, or
+          work through them as a church, small group, or family.
+        </p>
+      </div>
+
+      <div class="resource-list">
+        <!-- Prayer Walking Tips -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #36b7ff; --tone-b: #0f5f8a"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"
+              />
+              <path
+                d="M20 20v-2.38c0-1.12 1.03-2.12 1-4.62-.03-2.72-1.49-6-4.5-6C14.63 7 14 8.8 14 10.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"
+              />
+              <path d="M16 17h4" />
+              <path d="M4 13h4" />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>School Prayer Walking Tips</h3>
+            <p>
+              Practical guidance for prayer walking your local schools with
+              wisdom, safety, and spiritual effectiveness — including clear
+              do's and don'ts, how to prepare, and what to pray.
+            </p>
+            <div class="resource-actions">
+              <a href="prayer-walking-tips.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="prayer-walking-tips.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Canopy of Protection -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #4fc3f7; --tone-b: #1a5c7a"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+              />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Canopy of Protection</h3>
+            <p>
+              Specific prayers for schools and universities to establish
+              spiritual protection over our educational institutions, the
+              students inside them, and those who serve there.
+            </p>
+            <div class="resource-actions">
+              <a href="canopy-of-protection.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="canopy-of-protection.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Battleground for Schools -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #2f8fc4; --tone-b: #113a51"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
+              <line x1="13" x2="19" y1="19" y2="13" />
+              <line x1="16" x2="20" y1="16" y2="20" />
+              <line x1="19" x2="21" y1="21" y2="19" />
+              <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5" />
+              <line x1="5" x2="9" y1="14" y2="18" />
+              <line x1="7" x2="4" y1="17" y2="20" />
+              <line x1="3" x2="5" y1="19" y2="21" />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Battleground for Schools</h3>
+            <p>
+              Understanding the spiritual challenges facing our schools and how
+              to pray strategically — with testimonies of what happens when
+              God's people intercede.
+            </p>
+            <div class="resource-actions">
+              <a href="battleground-schools.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="battleground-schools.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Student Prayer Guide -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #45c8e0; --tone-b: #14536b"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 7v14" />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Student Prayer Guide</h3>
+            <p>
+              Equipping students to pray for their schools, teachers, and fellow
+              students — and to see their own campus as the mission field God
+              has placed them in.
+            </p>
+            <div class="resource-actions">
+              <a href="student-prayer-guide.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="student-prayer-guide.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- University Prayer Guide -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #3aa0d4; --tone-b: #0d4763"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+              />
+              <path d="M22 10v6" />
+              <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>University Prayer Guide</h3>
+            <p>
+              Targeted prayers for college campuses addressing the unique
+              challenges of higher education, available as a full 21-day
+              guide.
+            </p>
+            <div class="resource-actions">
+              <a href="university-prayer-guide.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="university-prayer-guide-full.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                Full 21-Day PDF
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Back-to-School Prayer Event -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #5ad1f0; --tone-b: #12495f"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M10 9h4" />
+              <path d="M12 7v5" />
+              <path d="M14 22v-4a2 2 0 0 0-4 0v4" />
+              <path
+                d="M18 22V5.618a1 1 0 0 0-.553-.894l-4.553-2.277a2 2 0 0 0-1.788 0L6.553 4.724A1 1 0 0 0 6 5.618V22"
+              />
+              <path
+                d="m18 7 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.618a1 1 0 0 1 .553-.894L6 7"
+              />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Back-to-School Prayer Event</h3>
+            <p>
+              A simple format for churches to commission their students, cover
+              their children in prayer, and empower the next generation to pray
+              — whether you have 15 minutes or a full evening.
+            </p>
+            <div class="resource-actions">
+              <a href="back-to-school-prayer-event.html" class="btn btn-primary"
+                >Read Online</a
+              >
+              <a
+                href="back-to-school-prayer-event.pdf"
+                class="btn btn-secondary"
+                download
+              >
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+                PDF
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Take Action -->
+      <div class="section-header">
+        <h2>Take Action</h2>
+        <p>
+          Reading is where it starts. These are the two steps that turn prayer
+          into an ongoing commitment to a specific campus.
+        </p>
+      </div>
+
+      <div class="resource-list">
+        <!-- Adopt a School -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #36b7ff; --tone-b: #113a51"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+              />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Adopt a School in Prayer</h3>
+            <p>
+              Register and commit to personally covering a specific campus in
+              prayer. Your school is then added to the national map so others
+              can see it is being prayed for.
+            </p>
+            <div class="resource-actions">
+              <a href="registration.html" class="btn btn-primary"
+                >Register &amp; Adopt</a
+              >
+            </div>
+          </div>
+        </article>
+
+        <!-- Prayer Map -->
+        <article class="resource-item">
+          <div
+            class="resource-visual"
+            style="--tone-a: #4fc3f7; --tone-b: #0f5f8a"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+              />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
+          <div class="resource-body">
+            <h3>Interactive Prayer Map</h3>
+            <p>
+              See the schools already being prayed for across the nation. A
+              visual reminder that you are part of something far larger than
+              your own campus.
+            </p>
+            <div class="resource-actions">
+              <a href="map.html" class="btn btn-primary">View the Map</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Book Feature -->
+      <div class="section-header">
+        <h2>Get the Full Prayer Guide</h2>
+      </div>
+
+      <div class="book-feature">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/62f1b617cf9c26364ad90dbc/370eba23-c7df-44ad-92dc-e7210b67ebc2/ReclaimaGeneration_Vol2_1__10765.jpg?format=500w"
+          alt="Reclaim a Generation prayer guide, Volume 2"
+        />
+        <div>
+          <h3>Reclaim a Generation</h3>
+          <p>
+            A comprehensive prayer guide with daily focuses, Scripture
+            references, and specific prayer points for the 21 days of prayer.
+            Each day includes targeted prayers for students, teachers,
+            administrators, and the spiritual atmosphere of our schools.
+          </p>
+          <div class="book-actions">
+            <a
+              href="https://prayershop.org/reclaim-a-generation-volume-2/"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener"
+              >Order from Prayer Shop</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <h2>Every School Covered in Prayer</h2>
+        <p>
+          These resources are free to use, print, and share with your church,
+          small group, or family. Take the next step and commit to a campus.
+        </p>
+        <div class="cta-buttons">
+          <a href="registration.html" class="btn btn-primary"
+            >Adopt a School</a
+          >
+          <a href="map.html" class="btn btn-secondary">View the Prayer Map</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <a
+          href="https://bridgebuilders.net"
+          target="_blank"
+          class="footer-logo"
+        >
+          BRIDGE<span>BUILDERS</span>
+        </a>
+        <p>P.O. Box 31415, Phoenix, AZ 85046 USA</p>
+        <p>
+          BridgeBuilders Int'l Leadership Network ©
+          <span id="currentYear"></span>. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Set current year
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      // Toggle mobile menu
+      function toggleMenu() {
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+      }
+    </script>
+  </body>
+</html>

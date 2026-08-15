@@ -242,6 +242,25 @@
         transform: translateX(4px);
       }
 
+      /* Nav submenu */
+      .nav-menu .nav-submenu {
+        list-style: none;
+        padding: 0 0 0 0.75rem;
+        margin: 0.25rem 0 0.5rem;
+        border-left: 2px solid rgba(17, 58, 81, 0.1);
+      }
+
+      .nav-menu .nav-submenu li {
+        margin: 0.125rem 0;
+      }
+
+      .nav-menu .nav-submenu a {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--text-medium);
+        padding: 0.5rem 0.75rem;
+      }
+
       .nav-menu a.active-page {
         background: linear-gradient(
           135deg,
@@ -503,6 +522,39 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
         margin-top: 3rem;
+      }
+
+      .resources-footer {
+        margin-top: 2.5rem;
+        text-align: center;
+      }
+
+      .resources-all-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--accent-blue);
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid rgba(54, 183, 255, 0.35);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+
+      .resources-all-link:hover {
+        background: rgba(54, 183, 255, 0.08);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .resources-all-link svg {
+        transition: transform 0.2s ease;
+      }
+
+      .resources-all-link:hover svg {
+        transform: translateX(3px);
       }
 
       .resource-card {
@@ -800,19 +852,40 @@
           <li><a href="homepage.html" class="active-page">Home</a></li>
           <li><a href="registration.html">Register & Adopt</a></li>
           <li><a href="map.html">Prayer Map</a></li>
-          <li><a href="prayer-walking-tips.html">Prayer Walking Tips</a></li>
-          <li><a href="canopy-of-protection.html">Canopy of Protection</a></li>
           <li>
-            <a href="battleground-schools.html">Battleground for Schools</a>
-          </li>
-          <li>
-            <a href="university-prayer-guide.html">University Prayer Guide</a>
-          </li>
-          <li><a href="student-prayer-guide.html">Student Prayer Guide</a></li>
-          <li>
-            <a href="back-to-school-prayer-event.html"
-              >Back-to-School Prayer Event</a
-            >
+            <a href="resources.html">Resources</a>
+            <ul class="nav-submenu">
+              <li>
+                <a href="prayer-walking-tips.html"
+                  >Prayer Walking Tips</a
+                >
+              </li>
+              <li>
+                <a href="canopy-of-protection.html"
+                  >Canopy of Protection</a
+                >
+              </li>
+              <li>
+                <a href="battleground-schools.html"
+                  >Battleground for Schools</a
+                >
+              </li>
+              <li>
+                <a href="university-prayer-guide.html"
+                  >University Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="student-prayer-guide.html"
+                  >Student Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="back-to-school-prayer-event.html"
+                  >Back-to-School Prayer Event</a
+                >
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -954,6 +1027,26 @@
               See schools being prayed for across the nation and add your school
               to the movement.
             </p>
+          </a>
+        </div>
+        <div class="resources-footer">
+          <a href="resources.html" class="resources-all-link">
+            Browse all prayer resources
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
           </a>
         </div>
       </div>

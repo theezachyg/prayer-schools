@@ -225,6 +225,25 @@
         transform: translateX(4px);
       }
 
+      /* Nav submenu */
+      .nav-menu .nav-submenu {
+        list-style: none;
+        padding: 0 0 0 0.75rem;
+        margin: 0.25rem 0 0.5rem;
+        border-left: 2px solid rgba(17, 58, 81, 0.1);
+      }
+
+      .nav-menu .nav-submenu li {
+        margin: 0.125rem 0;
+      }
+
+      .nav-menu .nav-submenu a {
+        font-size: 0.875rem;
+        font-weight: 400;
+        color: var(--text-medium);
+        padding: 0.5rem 0.75rem;
+      }
+
       .nav-menu a.active-page {
         background: linear-gradient(
           135deg,
@@ -874,21 +893,40 @@
           <li><a href="homepage.html">Home</a></li>
           <li><a href="registration.html">Register & Adopt</a></li>
           <li><a href="map.html">Prayer Map</a></li>
-          <li><a href="prayer-walking-tips.html">Prayer Walking Tips</a></li>
-          <li><a href="canopy-of-protection.html">Canopy of Protection</a></li>
           <li>
-            <a href="battleground-schools.html">Battleground for Schools</a>
-          </li>
-          <li>
-            <a href="university-prayer-guide.html" class="active-page"
-              >University Prayer Guide</a
-            >
-          </li>
-          <li><a href="student-prayer-guide.html">Student Prayer Guide</a></li>
-          <li>
-            <a href="back-to-school-prayer-event.html"
-              >Back-to-School Prayer Event</a
-            >
+            <a href="resources.html">Resources</a>
+            <ul class="nav-submenu">
+              <li>
+                <a href="prayer-walking-tips.html"
+                  >Prayer Walking Tips</a
+                >
+              </li>
+              <li>
+                <a href="canopy-of-protection.html"
+                  >Canopy of Protection</a
+                >
+              </li>
+              <li>
+                <a href="battleground-schools.html"
+                  >Battleground for Schools</a
+                >
+              </li>
+              <li>
+                <a href="university-prayer-guide.html" class="active-page"
+                  >University Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="student-prayer-guide.html"
+                  >Student Prayer Guide</a
+                >
+              </li>
+              <li>
+                <a href="back-to-school-prayer-event.html"
+                  >Back-to-School Prayer Event</a
+                >
+              </li>
+            </ul>
           </li>
         </ul>
       </nav>
@@ -900,7 +938,7 @@
         <div class="breadcrumb">
           <a href="homepage.html">Home</a>
           <span>/</span>
-          <a href="homepage.html#resources">Resources</a>
+          <a href="resources.html">Resources</a>
           <span>/</span>
           <span>University Prayer Guide</span>
         </div>
@@ -921,12 +959,6 @@
               <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
             </svg>
             Download Full 21-Day Guide
-          </a>
-          <a href="university-prayer-guide.pdf" class="btn btn-primary">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-            </svg>
-            Quick Guide
           </a>
           <button class="btn btn-secondary" onclick="openShareModal()">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
