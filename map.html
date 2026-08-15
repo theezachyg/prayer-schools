@@ -1416,6 +1416,9 @@
 
     <!-- Load configuration -->
     <script src="/config.js"></script>
+    <!-- Marker clustering. Vendored rather than loaded from a CDN so the map
+         has no third-party runtime dependency. -->
+    <script src="/markerclusterer.min.js"></script>
 
     <script>
       // Get config from window object
@@ -1958,13 +1961,58 @@
         document.getElementById("totalStates").textContent = states.size;
       }
 
+      // Marker clustering. With every school drawn individually the map has to
+      // render thousands of overlapping pins at national zoom, which is slow on
+      // desktop and worse on phones. The clusterer draws grouped bubbles instead
+      // and splits them apart as you zoom in.
+      let clusterer = null;
+
+      // One info window reused by every marker, rather than one built per school.
+      let sharedInfoWindow = null;
+
+      // Cluster bubble styling, in the site palette so it reads as ours.
+      const clusterRenderer = {
+        render({ count, position }) {
+          const size = count > 1000 ? 62 : count > 250 ? 54 : count > 50 ? 46 : 40;
+          const svg = window.btoa(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">' +
+              '<defs><linearGradient id="g" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">' +
+              '<stop offset="0" stop-color="#36b7ff"/><stop offset="1" stop-color="#113a51"/>' +
+              "</linearGradient></defs>" +
+              '<circle cx="20" cy="20" r="19" fill="url(#g)" fill-opacity="0.35"/>' +
+              '<circle cx="20" cy="20" r="14" fill="url(#g)" stroke="#ffffff" stroke-width="2"/>' +
+              "</svg>",
+          );
+          return new google.maps.Marker({
+            position,
+            icon: {
+              url: "data:image/svg+xml;base64," + svg,
+              scaledSize: new google.maps.Size(size, size),
+              anchor: new google.maps.Point(size / 2, size / 2),
+            },
+            label: {
+              text: String(count),
+              color: "#ffffff",
+              fontSize: count > 999 ? "11px" : "12px",
+              fontWeight: "700",
+            },
+            // Keep denser clusters above sparser ones where they overlap.
+            zIndex: 1000 + count,
+          });
+        },
+      };
+
       // Add markers to map
       function addMarkersToMap() {
         console.log("Adding markers to map...");
 
-        // Clear existing markers
-        markers.forEach((marker) => marker.setMap(null));
+        // The clusterer owns attachment, so clearing goes through it.
+        if (clusterer) clusterer.clearMarkers();
         markers = [];
+
+        if (!sharedInfoWindow) {
+          sharedInfoWindow = new google.maps.InfoWindow();
+        }
 
         // Add a marker for each school
         schoolData.forEach((school, key) => {
@@ -1981,9 +2029,9 @@
             return;
           }
 
+          // No `map:` here — the clusterer decides what is drawn at this zoom.
           const marker = new google.maps.Marker({
             position: { lat: school.lat, lng: school.lng },
-            map: map,
             title: school.name,
             icon: {
               path: google.maps.SymbolPath.CIRCLE,
@@ -1995,36 +2043,34 @@
             },
           });
 
-          // Create info window content
-          const infoContent = `
+          marker.addListener("click", () => {
+            // Build content on demand and reuse the single window, instead of
+            // sweeping every marker to close its own.
+            sharedInfoWindow.setContent(
+              `
                     <div class="info-window">
                         <h4>${school.name}</h4>
                         <p>${school.address}</p>
                         <p class="prayer-count">${school.people.length} ${school.people.length === 1 ? "person" : "people"} praying</p>
                     </div>
-                `;
-
-          const infoWindow = new google.maps.InfoWindow({
-            content: infoContent,
+                `,
+            );
+            sharedInfoWindow.open(map, marker);
           });
 
-          marker.addListener("click", () => {
-            // Close any open info windows
-            markers.forEach((m) => {
-              if (m.infoWindow) m.infoWindow.close();
-            });
-            infoWindow.open(map, marker);
-          });
-
-          // Store info window reference
-          marker.infoWindow = infoWindow;
           markers.push(marker);
+        });
+
+        clusterer = new markerClusterer.MarkerClusterer({
+          map: map,
+          markers: markers,
+          renderer: clusterRenderer,
         });
 
         // Hide loading
         document.getElementById("loading").style.display = "none";
 
-        console.log(`Added ${markers.length} markers to map`);
+        console.log(`Added ${markers.length} markers to map (clustered)`);
       }
 
       // Initialize prayer notifications
