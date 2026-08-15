@@ -8,21 +8,24 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#113a51" />
-    <title>School Prayer Walking Tips - 21 Days of Prayer for Schools</title>
+    <title>
+      How to Host a Back-to-School Prayer Event at Your Church - 21 Days of
+      Prayer for Schools
+    </title>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://schoolprayer.bridgebuilders.net/prayer-walking-tips.html"
+      content="https://prayerforschools.com/back-to-school-prayer-event.html"
     />
     <meta
       property="og:title"
-      content="School Prayer Walking Tips - 21 Days of Prayer"
+      content="How to Host a Back-to-School Prayer Event at Your Church"
     />
     <meta
       property="og:description"
-      content="Practical guidance for prayer walking your local schools with safety and effectiveness in mind."
+      content="A simple, adaptable format for commissioning your students, covering your children in prayer, and empowering the next generation to pray for their schools."
     />
     <meta
       property="og:image"
@@ -498,6 +501,19 @@
         font-weight: 600;
       }
 
+      .content-section a {
+        color: var(--accent-blue);
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(54, 183, 255, 0.4);
+        transition: all 0.2s ease;
+      }
+
+      .content-section a:hover {
+        color: var(--primary-blue);
+        border-bottom-color: var(--primary-blue);
+      }
+
       /* Highlight Box */
       .highlight-box {
         background: linear-gradient(
@@ -520,106 +536,102 @@
         font-size: 1.1rem;
       }
 
-      /* Do's and Don'ts Grid */
-      .do-dont-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-        margin: 2rem 0;
-      }
-
-      .do-box,
-      .dont-box {
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid;
-        position: relative;
-      }
-
-      .do-box {
-        background: linear-gradient(
-          135deg,
-          rgba(76, 175, 80, 0.05),
-          rgba(76, 175, 80, 0.02)
-        );
-        border-color: rgba(76, 175, 80, 0.2);
-      }
-
-      .dont-box {
-        background: linear-gradient(
-          135deg,
-          rgba(239, 68, 68, 0.05),
-          rgba(239, 68, 68, 0.02)
-        );
-        border-color: rgba(239, 68, 68, 0.2);
-      }
-
-      .do-box h3 {
-        color: var(--success-green);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .dont-box h3 {
-        color: var(--danger-red);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .do-box h3::before {
-        content: "✓";
-        width: 24px;
-        height: 24px;
-        background: var(--success-green);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      .dont-box h3::before {
-        content: "✕";
-        width: 24px;
-        height: 24px;
-        background: var(--danger-red);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: bold;
-      }
-
-      /* Scripture Boxes */
-      .scripture-box {
+      /* Quote Box */
+      .quote-box {
         background: linear-gradient(135deg, #f8f9fa, #f3f4f6);
         border-left: 4px solid var(--accent-blue);
         border-radius: 8px;
         padding: 1.5rem;
         margin: 1.5rem 0;
-        position: relative;
       }
 
-      .scripture-reference {
-        font-weight: 700;
-        color: var(--primary-blue);
-        font-size: 0.875rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 0.75rem;
-      }
-
-      .scripture-box p {
+      .quote-box p {
         color: var(--text-dark);
         font-style: italic;
         margin: 0;
         line-height: 1.8;
+        font-size: 1.05rem;
+      }
+
+      .quote-attribution {
+        display: block;
+        margin-top: 0.75rem;
+        font-style: normal;
+        font-weight: 700;
+        color: var(--primary-blue);
+        font-size: 0.8125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Options Grid */
+      .options-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+
+      .option-card {
+        background: var(--bg-light);
+        border: 1px solid rgba(17, 58, 81, 0.08);
+        border-radius: 12px;
+        padding: 1.25rem;
+      }
+
+      .option-card h4 {
+        color: var(--primary-blue);
+        font-size: 0.9375rem;
+        font-weight: 700;
+        margin-bottom: 0.375rem;
+      }
+
+      .option-card p {
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.6;
+      }
+
+      /* Numbered Steps */
+      .step {
+        display: flex;
+        gap: 1.25rem;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(17, 58, 81, 0.08);
+      }
+
+      .step:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      .step-number {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-blue), #2a90cc);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1rem;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .step-body {
+        min-width: 0;
+      }
+
+      .step-body h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.125rem;
+        line-height: 1.4;
+      }
+
+      .step-body p:last-child {
+        margin-bottom: 0;
       }
 
       /* CTA Section */
@@ -796,6 +808,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.5rem;
+        border: none;
       }
 
       .share-fb {
@@ -881,16 +894,118 @@
           justify-content: center;
         }
 
-        .do-dont-grid {
-          grid-template-columns: 1fr;
-        }
-
         .content-section {
           padding: 1.5rem;
         }
 
+        .step {
+          gap: 1rem;
+        }
+
         .share-options {
           grid-template-columns: 1fr;
+        }
+      }
+
+      /* Print / PDF */
+      @media print {
+        @page {
+          margin: 0.6in 0.65in;
+        }
+
+        .header,
+        .action-bar,
+        .toc-sidebar,
+        .modal,
+        .breadcrumb {
+          display: none !important;
+        }
+
+        body {
+          background: white;
+        }
+
+        .hero-section {
+          margin-top: 0;
+          padding: 2rem 0;
+          background: none;
+          color: var(--primary-blue);
+          border-bottom: 3px solid var(--accent-blue);
+        }
+
+        .hero-section::before {
+          display: none;
+        }
+
+        .hero-content h1 {
+          font-size: 1.9rem;
+        }
+
+        .hero-content .subtitle {
+          color: var(--text-medium);
+          font-size: 1rem;
+        }
+
+        .content-wrapper {
+          display: block;
+          margin: 1.5rem 0;
+          padding: 0;
+        }
+
+        .content-section {
+          padding: 0;
+          margin-bottom: 1.75rem;
+          border: none;
+          box-shadow: none;
+        }
+
+        .content-section h2 {
+          font-size: 1.5rem;
+          break-after: avoid;
+        }
+
+        .step,
+        .quote-box,
+        .highlight-box,
+        .option-card {
+          break-inside: avoid;
+        }
+
+        .cta-section {
+          background: none;
+          color: var(--primary-blue);
+          border: 2px solid var(--accent-blue);
+          padding: 1.5rem;
+          break-inside: avoid;
+        }
+
+        .cta-section::before {
+          display: none;
+        }
+
+        .cta-section h2,
+        .cta-section p,
+        .cta-section a {
+          color: var(--primary-blue);
+        }
+
+        .content-section a,
+        .content-section a:hover {
+          color: var(--primary-blue);
+          border-bottom: none;
+        }
+
+        footer {
+          margin-top: 2rem;
+          padding: 1.5rem 0 0;
+          background: none;
+          color: var(--text-medium);
+          border-top: 1px solid rgba(17, 58, 81, 0.2);
+        }
+
+        .footer-logo,
+        .footer-logo span {
+          color: var(--primary-blue);
         }
       }
     </style>
@@ -912,13 +1027,9 @@
       <nav class="nav-menu">
         <ul>
           <li><a href="homepage.html">Home</a></li>
-          <li><a href="registration.html">Register & Adopt</a></li>
+          <li><a href="registration.html">Register &amp; Adopt</a></li>
           <li><a href="map.html">Prayer Map</a></li>
-          <li>
-            <a href="prayer-walking-tips.html" class="active-page"
-              >Prayer Walking Tips</a
-            >
-          </li>
+          <li><a href="prayer-walking-tips.html">Prayer Walking Tips</a></li>
           <li><a href="canopy-of-protection.html">Canopy of Protection</a></li>
           <li>
             <a href="battleground-schools.html">Battleground for Schools</a>
@@ -928,7 +1039,7 @@
           </li>
           <li><a href="student-prayer-guide.html">Student Prayer Guide</a></li>
           <li>
-            <a href="back-to-school-prayer-event.html"
+            <a href="back-to-school-prayer-event.html" class="active-page"
               >Back-to-School Prayer Event</a
             >
           </li>
@@ -942,14 +1053,15 @@
         <div class="breadcrumb">
           <a href="homepage.html">Home</a>
           <span>/</span>
-          <a href="#">Resources</a>
+          <a href="homepage.html#resources">Resources</a>
           <span>/</span>
-          <span>Prayer Walking Tips</span>
+          <span>Back-to-School Prayer Event</span>
         </div>
-        <h1>School Prayer Walking Tips</h1>
+        <h1>How to Host a Back-to-School Prayer Event at Your Church</h1>
         <p class="subtitle">
-          A comprehensive guide to prayer walking your local schools with
-          wisdom, safety, and spiritual effectiveness
+          A simple, adaptable format for commissioning your students, covering
+          your children in prayer, and empowering the next generation to pray
+          for their schools
         </p>
       </div>
     </section>
@@ -958,7 +1070,11 @@
     <div class="action-bar">
       <div class="action-container">
         <div class="action-buttons">
-          <a href="prayer-walking-tips.pdf" class="btn btn-primary" download>
+          <a
+            href="back-to-school-prayer-event.pdf"
+            class="btn btn-primary"
+            download
+          >
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
             </svg>
@@ -979,7 +1095,7 @@
               d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
             />
           </svg>
-          <span>10 min read</span>
+          <span>5 min read</span>
         </div>
       </div>
     </div>
@@ -991,304 +1107,257 @@
         <h3 class="toc-title">On This Page</h3>
         <ul class="toc-list">
           <li>
-            <a href="#introduction" class="toc-link">What is Prayer Walking?</a>
+            <a href="#story" class="toc-link">A Night at City Life Church</a>
           </li>
-          <li><a href="#dos-donts" class="toc-link">Do's and Don'ts</a></li>
-          <li><a href="#preparation" class="toc-link">In Preparation</a></li>
-          <li><a href="#during" class="toc-link">During the Prayer Walk</a></li>
-          <li><a href="#what-to-pray" class="toc-link">What to Pray</a></li>
           <li>
-            <a href="#scriptures" class="toc-link">Scripture References</a>
+            <a href="#empowered" class="toc-link"
+              >Covered in Prayer, Empowered to Pray</a
+            >
+          </li>
+          <li>
+            <a href="#adapt" class="toc-link"
+              >It Doesn't Have to Be an Entire Night</a
+            >
+          </li>
+          <li>
+            <a href="#format" class="toc-link"
+              >A Simple Back-to-School Prayer Format</a
+            >
           </li>
         </ul>
       </aside>
 
       <!-- Main Content -->
       <main class="main-content">
-        <!-- Introduction Section -->
-        <div id="introduction" class="content-section">
-          <h2>What is Prayer Walking?</h2>
+        <!-- Story Section -->
+        <div id="story" class="content-section">
+          <h2>A Night at City Life Church</h2>
           <p>
-            Prayer walking is talking with our Heavenly Father through His Son
-            Jesus Christ while walking. Our focus is upon our neighborhood
-            schools. Praying near a campus brings us in close proximity with our
-            prayer target; we begin to see with the eyes and compassion of Jesus
-            the needs of the young people for whom we are interceding.
+            Recently, my daughter, Nicole Reginelli, Prayer Director at City
+            Life Church in San Francisco, called to tell us about the
+            Back-to-School Prayer Night she had just hosted at her church.
           </p>
 
-          <h3>Three Essential Components</h3>
+          <div class="quote-box">
+            <p>
+              "It was so powerful."
+              <span class="quote-attribution"
+                >Nicole Reginelli, Prayer Director, City Life Church</span
+              >
+            </p>
+          </div>
+
+          <p>As Nicole began describing what happened, I could understand why.</p>
+
           <p>
-            These three elements work together to create powerful, effective
-            prayer walks:
+            First, the junior high and high school students were called forward,
+            commissioned, and prayed over as they prepared to return to their
+            schools.
           </p>
 
-          <ul>
-            <li>
-              <strong>Worship:</strong> Proclaim the excellencies of the name of
-              Jesus or softly sing a song which exalts the Lord and His mighty
-              power.
-            </li>
-            <li>
-              <strong>Warfare:</strong> Prayer walking is spiritual battle. You
-              may experience an indirect onslaught of the enemy: confusion or
-              pestering of the mind, causing thoughts to wander or telling you
-              this isn't doing any good. Press through these roadblocks.
-            </li>
-            <li>
-              <strong>Welcome:</strong> Invite God's transforming presence to
-              permeate the school for which you are praying.
-            </li>
-          </ul>
+          <p>
+            Then those older students gathered around the elementary-age
+            children and prayed over them.
+          </p>
+
+          <p>
+            Next, the teachers, school staff, coaches, and after-care workers
+            were called forward. This time, all the children and young people
+            gathered around and prayed over them, with the pastoral team coming
+            alongside the students as they prayed.
+          </p>
+
+          <p>And the praying didn't stop there.</p>
+
+          <p>
+            The church had created interactive prayer stations where the
+            children could pray specifically and by name for their friends,
+            their teachers, and their schools—the very people and places they
+            would encounter when they returned to school.
+          </p>
+        </div>
+
+        <!-- Empowered Section -->
+        <div id="empowered" class="content-section">
+          <h2>Covered in Prayer, Empowered to Pray</h2>
+          <p>There was something important happening in all of this.</p>
+
+          <p>
+            The church was covering its children and young people in
+            prayer—but at the same time, those children and young people were
+            being empowered to pray.
+          </p>
+
+          <div class="quote-box">
+            <p>
+              "It was beautiful to see even the elementary school children
+              praying fervently for their teachers and schools. There is no
+              junior Holy Spirit."
+              <span class="quote-attribution">Nicole Reginelli</span>
+            </p>
+          </div>
+
+          <p>
+            They weren't simply being sent back to school with the prayers of
+            their church behind them. They were learning to pray for their
+            friends, their teachers, and their schools—and to understand the
+            mission field God had called them into.
+          </p>
+
+          <p>That is what I love about what happened at City Life.</p>
 
           <div class="highlight-box">
             <p>
-              Integrate these three "W's" in a good balance,<br />though at
-              times one or another may seem to dominate.
+              The church prayed for the next generation.<br />And the next
+              generation was equipped and empowered to pray.
             </p>
           </div>
+
+          <p>And your church can do the same.</p>
         </div>
 
-        <!-- Do's and Don'ts Section -->
-        <div id="dos-donts" class="content-section">
-          <h2>Do's and Don'ts of Prayer Walking</h2>
+        <!-- Adapt Section -->
+        <div id="adapt" class="content-section">
+          <h2>It Doesn't Have to Be an Entire Night</h2>
+          <p>
+            City Life Church devoted an hour and a half to their Back-to-School
+            Prayer Night. But churches don't have to create a separate event to
+            do this.
+          </p>
 
-          <div class="do-dont-grid">
-            <div class="do-box">
-              <h3>DO</h3>
-              <ul>
-                <li>
-                  <strong>Worship God</strong> as you prayer walk or prayer
-                  drive the school's perimeter
-                </li>
-                <li>
-                  <strong>Welcome God's Holy Spirit</strong> to the school for
-                  which you are praying
-                </li>
-                <li>
-                  <strong>Pronounce blessings</strong> upon the teachers,
-                  students, and staff
-                </li>
-                <li>
-                  <strong
-                    >Pray salvation, healing, and spiritual freedom</strong
-                  >
-                  for the students who attend there
-                </li>
-              </ul>
+          <div class="options-grid">
+            <div class="option-card">
+              <h4>15 Minutes on a Sunday</h4>
+              <p>Take a portion of your regular Sunday service.</p>
             </div>
-
-            <div class="dont-box">
-              <h3>DON'T</h3>
-              <ul>
-                <li>
-                  Do not <strong>draw attention to yourself</strong> - You have
-                  an audience of One
-                </li>
-                <li>
-                  Do not <strong>prayerwalk during school hours</strong> (go
-                  before/after school or weekends)
-                </li>
-                <li>
-                  Do not <strong>go on campus</strong> (even if the gate is
-                  open, it is considered trespassing)
-                </li>
-                <li>
-                  Do not <strong>engage in dialogue with students</strong> -
-                  Your mission is "vertical"
-                </li>
-              </ul>
+            <div class="option-card">
+              <h4>All-Family Worship</h4>
+              <p>
+                Make it part of an all-family worship service before dismissing
+                the children.
+              </p>
+            </div>
+            <div class="option-card">
+              <h4>Youth-Group Gathering</h4>
+              <p>Incorporate it into a gathering you already hold.</p>
+            </div>
+            <div class="option-card">
+              <h4>Back-to-School Sunday</h4>
+              <p>Hold a special service built around the new school year.</p>
+            </div>
+            <div class="option-card">
+              <h4>An Evening of Prayer</h4>
+              <p>Devote an entire evening to prayer, as City Life did.</p>
             </div>
           </div>
-        </div>
-
-        <!-- Preparation Section -->
-        <div id="preparation" class="content-section">
-          <h2>In Preparation</h2>
-          <p>
-            It is important that we prepare our mind, body and spirit. You are
-            about to become a bridge of blessing between heaven and earth. Don't
-            allow any feelings of inadequacy to plague you. You have indicated
-            your willingness by your presence and God is always faithful to take
-            us where we are and lead us.
-          </p>
 
           <p>
-            The book "Prayerwalking" by <em>Steve Hawthorne</em> offers the
-            following preparation tips:
+            Nicole's advice was practical: make it part of the rhythm of your
+            church—something that is already happening and people are already
+            coming to.
           </p>
 
-          <ol>
-            <li>
-              <strong>Open your mouth before you open your heart.</strong>
-              Whether you sing, shout or whisper, warm up your vocal cords with
-              praise before setting out. Put the name of Jesus on your lips.
-            </li>
-
-            <li>
-              <strong>Take charge of the directions your mind will go.</strong>
-              Fix your attention on the purposes and ways and thoughts of God
-              before you launch out. If you find your mind wandering, read
-              Scripture out loud.
-            </li>
-
-            <li>
-              <strong>Seek God for guidance at intervals;</strong> then trust
-              that He is guiding you!
-            </li>
-
-            <li>
-              If you are prayerwalking with others,
-              <strong>take a few minutes to connect and pray.</strong> Find out
-              if anyone is sensing/hearing anything from the Lord.
-            </li>
-
-            <li>
-              <strong>Take your stance before the Father,</strong> enthroned in
-              highest heaven through the blood and priestly excellence of Jesus.
-            </li>
-          </ol>
+          <div class="highlight-box">
+            <p>
+              Whether you have 15 minutes or an hour and a half,<br />you can
+              adapt the same basic model.
+            </p>
+          </div>
         </div>
 
-        <!-- During Prayer Walk Section -->
-        <div id="during" class="content-section">
-          <h2>What to Do During the Prayer Walk</h2>
+        <!-- Format Section -->
+        <div id="format" class="content-section">
+          <h2>A Simple Back-to-School Prayer Format</h2>
 
-          <ol>
-            <li>
-              <strong>Open your eyes;</strong> ask God to help you see with His
-              eyes.
-            </li>
-
-            <li>
-              <strong>Open your ears;</strong> listen for God's whispered cues -
-              expect Him to highlight truths you have hidden in your heart and
-              apply them to what is around you.
-            </li>
-
-            <li>
-              <strong>Pray together.</strong> Seek to consciously follow and
-              reinforce prayers lifted by others on the prayer team.
-            </li>
-
-            <li>
-              <strong>Pray with Scripture.</strong> You can be confident of
-              praying the will of God when you are praying His Word. God has
-              breathed life into His Word and loves to bless it.
-            </li>
-
-            <li>
-              <strong>Pray with relevance.</strong> Pray with sensitivity to the
-              people and places you are actually encountering. Feel the freedom
-              to extend your empathy unevenly knowing that the Lord is guiding
-              you.
-            </li>
-          </ol>
-        </div>
-
-        <!-- What to Pray Section -->
-        <div id="what-to-pray" class="content-section">
-          <h2>What to Pray</h2>
-          <p>
-            Based on the model prayer in Luke 11:2-4, focus your prayers on
-            these four key areas:
-          </p>
-
-          <ol>
-            <li>
-              <strong>Pray for God's Glory</strong><br />
-              Pray that God would work so that He would be honored, adored,
-              lifted up, revealed and praised by name among our students and in
-              our schools.
-            </li>
-
-            <li>
-              <strong>Pray for God's Kingdom</strong><br />
-              Pray with expectancy for the coming of some measure of heaven's
-              liberating dominion amidst the students and schools.
-            </li>
-
-            <li>
-              <strong>Pray for Reconciliation</strong><br />
-              Ask God to reconcile every student to Himself. Ask God to bring
-              reconciliation where there are offenses or breaches among students
-              themselves, and among students and teachers.
-            </li>
-
-            <li>
-              <strong>Pray for God to Release His Spirit and Lead</strong><br />
-              Pray that God would lead students, families, neighborhoods into
-              the light of His truth, rescuing them from darkness and
-              destruction.
-            </li>
-          </ol>
-        </div>
-
-        <!-- Scriptures Section -->
-        <div id="scriptures" class="content-section">
-          <h2>Scripture References for Prayer Walking</h2>
-          <p>Use these powerful scriptures as you intercede for schools:</p>
-
-          <div class="scripture-box">
-            <div class="scripture-reference">Psalm 66:1-4</div>
-            <p>
-              "Shout for joy to God, all the earth! Sing the glory of his name;
-              make his praise glorious. Say to God, 'How awesome are your deeds!
-              So great is your power that your enemies cringe before you. All
-              the earth bows down to you; they sing praise to you, they sing the
-              praises of your name.'"
-            </p>
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-body">
+              <h3>
+                Commission and pray over your junior high and high school
+                students.
+              </h3>
+              <p>
+                Call them forward and pray over them as they return to their
+                campuses.
+              </p>
+            </div>
           </div>
 
-          <div class="scripture-box">
-            <div class="scripture-reference">Isaiah 6:3</div>
-            <p>
-              "And they were calling to one another: 'Holy, holy, holy is the
-              Lord Almighty; the whole earth is full of his glory.'"
-            </p>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-body">
+              <h3>Have the older students pray over the younger children.</h3>
+              <p>
+                Let your junior high and high school students gather around the
+                elementary-age children and pray for them.
+              </p>
+            </div>
           </div>
 
-          <div class="scripture-box">
-            <div class="scripture-reference">Psalm 67:1-3</div>
-            <p>
-              "May God be gracious to us and bless us and make his face shine on
-              us so that your ways may be known on earth, your salvation among
-              all nations. May the peoples praise you, God; may all the peoples
-              praise you."
-            </p>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-body">
+              <h3>Let the students pray for the adults who serve them.</h3>
+              <p>
+                Call forward teachers, school staff, coaches, after-care
+                workers, and others who work with students. Invite the children
+                and young people to pray over them, with pastors and leaders
+                coming alongside to support them.
+              </p>
+            </div>
           </div>
 
-          <div class="scripture-box">
-            <div class="scripture-reference">1 Timothy 2:1-4</div>
-            <p>
-              "I urge, then, first of all, that petitions, prayers, intercession
-              and thanksgiving be made for all people—for kings and all those in
-              authority, that we may live peaceful and quiet lives in all
-              godliness and holiness. This is good, and pleases God our Savior,
-              who wants all people to be saved and to come to a knowledge of the
-              truth."
-            </p>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-body">
+              <h3>Create prayer stations for your children and young people.</h3>
+              <p>
+                Give them opportunities to pray by name for their friends who
+                don't know the Lord, their teachers, and their schools. Help
+                them see that these aren't abstract prayer needs. These are the
+                people God has placed in their lives and the mission field they
+                walk into every day.
+              </p>
+            </div>
           </div>
 
-          <div class="scripture-box">
-            <div class="scripture-reference">Luke 10:2</div>
-            <p>
-              "He told them, 'The harvest is plentiful, but the workers are few.
-              Ask the Lord of the harvest, therefore, to send out workers into
-              his harvest field.'"
-            </p>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-body">
+              <h3>Give people a way to keep praying.</h3>
+              <p>
+                Don't let the prayer end when the service or event is over. Put
+                a QR code for
+                <a href="homepage.html">PrayerForSchools.com</a> on the screen
+                and invite people to continue covering their schools in prayer.
+              </p>
+              <p>
+                There they can access
+                <a href="homepage.html#resources">free prayer guides</a> and
+                resources, find practical help for praying for schools, and
+                <a href="registration.html">adopt a school in prayer</a>—committing
+                to personally cover that campus. They can also see the
+                <a href="map.html">interactive map</a> of schools already being
+                prayed for across the nation.
+              </p>
+              <p>
+                This gives families, students, grandparents, teachers, and
+                intercessors a simple next step—and helps turn one powerful
+                Back-to-School Prayer event into ongoing prayer throughout the
+                school year.
+              </p>
+            </div>
           </div>
         </div>
 
         <!-- CTA Section -->
         <div class="cta-section">
-          <h2>Share Your Prayer Journey</h2>
+          <h2>One Event Can Become a Year of Prayer</h2>
           <p>
-            Please encourage other watchmen by sharing your prayers and comments
-            on our Facebook page.
-          </p>
-          <p>
-            Email photos to:
-            <a href="mailto:info@bridgebuilders.net">info@bridgebuilders.net</a>
+            One Back-to-School Prayer event can become the beginning of a year
+            of prayer. Invite your church to
+            <a href="registration.html">adopt a school</a> and keep covering
+            their campuses all year long.
           </p>
         </div>
       </main>
@@ -1413,7 +1482,6 @@
         let current = "";
         sections.forEach((section) => {
           const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
           if (scrollY >= sectionTop - 200) {
             current = section.getAttribute("id");
           }
@@ -1458,7 +1526,7 @@
       function shareOnTwitter() {
         const url = encodeURIComponent(window.location.href);
         const text = encodeURIComponent(
-          "Check out these Prayer Walking Tips for schools! #21DaysOfPrayer",
+          "How to host a Back-to-School Prayer Event at your church #21DaysOfPrayer",
         );
         window.open(
           `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
@@ -1468,10 +1536,10 @@
 
       function shareByEmail() {
         const subject = encodeURIComponent(
-          "School Prayer Walking Tips - 21 Days of Prayer",
+          "How to Host a Back-to-School Prayer Event at Your Church",
         );
         const body = encodeURIComponent(
-          `I thought you might be interested in these prayer walking tips for schools:\n\n${window.location.href}`,
+          `I thought you might find this helpful for your church:\n\n${window.location.href}`,
         );
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
       }
